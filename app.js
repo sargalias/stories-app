@@ -1,6 +1,8 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
+// Initialise database
+const db = require('./config/database');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
