@@ -3,16 +3,16 @@ if (process.env.NODE_ENV !== 'production') {
 }
 // Initialise database
 const db = require('./config/database');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
 const passport = require('passport');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var authRouter = require('./routes/auth');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
