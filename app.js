@@ -22,4 +22,9 @@ app.use('/users', usersRouter);
 // Express-session config
 require('./config/session')(app);
 
+// Passport config
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/auth')(passport);
+
 module.exports = app;
