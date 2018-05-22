@@ -31,4 +31,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 require('./config/auth')(passport);
 
+// Global vars
+app.use((req, res, next) => {
+    res.locals.user = req.user || null;
+    next();
+});
+
 module.exports = app;
