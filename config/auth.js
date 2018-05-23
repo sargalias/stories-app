@@ -8,22 +8,22 @@ module.exports = function(passport) {
         callbackURL: "/auth/google/callback"
     },
         function(accessToken, refreshToken, profile, done) {
-            console.log(accessToken);
-            console.log(profile);
             User.findOne({googleId: profile.id}, (err, user) => {
                 if (err) {
                     return done(err);
                 }
-                if (!user) {
+                else if (!user) {
                     // Create user
-                    User.create({googleId: profile.id}, (err, user) => {
+                    User.create({googleId: profile.id, name: profile.displayName}, (err, user) => {
                         if (err) {
                             return done(err);
                         }
                         return done(null, user);
                     });
                 }
-                return done(null, user);
+                else {
+                    return done(null, user);
+                }
             });
         }
     ));
