@@ -3,6 +3,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 // Initialise database
 const db = require('./config/database');
+
+// Seed database
+if (process.env.SEED_DATABASE === 'true') {
+    require('./config/database-seed');
+}
+
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
