@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const commentSchema = require('./commentSchema');
+const Comment = require('./Comment');
 
 const storySchema = new mongoose.Schema({
     title: {type: String, required: true},
@@ -8,7 +8,7 @@ const storySchema = new mongoose.Schema({
     published: {type: Date, default: Date.now, required: true},
     allowComments: {type: Boolean, default: true, required: true},
     authorId: {type: String, required: true},
-    comments: [commentSchema]
+    comments: [Comment.schema]
 });
 
 module.exports = mongoose.model('Story', storySchema);
