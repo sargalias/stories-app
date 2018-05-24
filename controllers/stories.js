@@ -4,6 +4,7 @@ const {checkSchema, validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const {removeScriptTags} = require('../helpers/remove-script-tags');
 const async = require('async');
+const {storyValidation} = require('../helpers/storyValidation');
 
 
 module.exports.index = (req, res, next) => {
@@ -23,67 +24,17 @@ module.exports.new = (req, res, next) => {
     res.render('stories/new');
 };
 
-module.exports.storyValidation = checkSchema({
-    title: {
-        in: ['body'],
-        trim: true,
-        errorMessage: 'Title is required',
-        isLength: {
-            options: {min: 1}
-        },
-        escape: true
-    },
-    privacy: {
-        in: ['body'],
-        errorMessage: 'Invalid choice for status',
-        exists: true,
-        custom: {
-            errorMessage: 'Invalid value for Allow Comments',
-            options: (val, {req}) => {
-                return val.match(/^(PUBLIC|PRIVATE|UNLISTED)$/) != null;
-            }
-        },
-        escape: true
-    },
-    // if allowComments exists, it must equal true
-    allowComments: {
-        in: ['body'],
-        errorMessage: 'Invalid value for Allow Comments',
-        optional: true,
-        custom: {
-            options: (val, {req}) => {
-                return val.match(/^true$/) != null;
-            }
-        },
-        escape: true
-    },
-    body: {
-        in: ['body'],
-        errorMessage: 'Body is required',
-        trim: true,
-        isLength: {
-            options: {min: 1}
-        },
-        custom: {
-            options: (val, {req}) => {
-                return val.match(/^<p>&nbsp;<\/p>$/) === null;
-            }
-        },
-        customSanitizer: {
-            options: (val) => {
-                return removeScriptTags(val);
-            }
-        }
-    }
-});
 
-module.exports.create = (req, res, next) => {
+function createValidationErrors(req, res, next) {
     const errors = validationResult(req);
     const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
     if (!errors.isEmpty()) {
         console.log(errors.array());
         return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
+}
+
+function createStory(req, res, next) {
     storyData.allowComments = storyData.allowComments === 'true';
     storyData.authorId = req.user.id;
     storyData.authorName = req.user.name;
@@ -107,9 +58,10 @@ module.exports.create = (req, res, next) => {
             return next(err);
         }
         res.redirect(`/stories/${results.storySave.id}`);
-
     });
-};
+}
+
+module.exports.create = [storyValidation, createValidationErrors, createStory];
 
 module.exports.show = (req, res, next) => {
     Story.findById(req.params.story_id, (err, story) => {
