@@ -1,0 +1,10 @@
+<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector('#body'), {
+            toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+            removePlugins: ['Heading']
+        })
+        .catch( error => console.error(error))
+</script>
