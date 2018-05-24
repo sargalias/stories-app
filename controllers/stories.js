@@ -80,3 +80,16 @@ module.exports.show = (req, res, next) => {
     });
 };
 
+module.exports.edit = (req, res, next) => {
+    Story.findById(req.params.story_id, (err, story) => {
+        if (err) {
+            return next(err);
+        }
+        if (!story) {
+            let err = new Error('Story could not be found');
+            err.statusCode = 404;
+            return next(err);
+        }
+        res.render('stories/edit', {story: story});
+    });
+};
