@@ -24,17 +24,12 @@ module.exports.new = (req, res, next) => {
 };
 
 
-function createValidationErrors(req, res, next) {
+function createStory(req, res, next) {
     const errors = validationResult(req);
     const storyData = matchedData(req, {locations: ['body']});
     if (!errors.isEmpty()) {
         return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
-    return next();
-}
-
-function createStory(req, res, next) {
-    const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
     storyData.allowComments = storyData.allowComments === 'true';
     storyData.authorId = req.user.id;
     storyData.authorName = req.user.name;
@@ -61,7 +56,7 @@ function createStory(req, res, next) {
     });
 }
 
-module.exports.create = [storyValidation, createValidationErrors, createStory];
+module.exports.create = [storyValidation, createStory];
 
 module.exports.show = (req, res, next) => {
     Story.findById(req.params.story_id, (err, story) => {
