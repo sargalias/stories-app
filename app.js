@@ -6,6 +6,7 @@ const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
 const viewHelpers = require('./helpers/views');
+const methodOverride = require('method-override');
 
 
 // General express configuration
@@ -16,6 +17,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Method override
+app.use(methodOverride('_method'));
 
 // View engine ejs
 app.set('view engine', 'ejs');
