@@ -41,6 +41,10 @@ const hbs = exphbs.create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+// Body Parser
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 // Express-session config
 require('./config/session')(app);
 
