@@ -10,11 +10,21 @@
   .button-google {
     padding: 0;
     img {
-      height: 100%;
-      width: 100%;
+      max-width: 140px;
     }
-    width: 140px;
-    height: auto;
   }
 }
 
+.button-google {
+  img {
+    max-width: 200px;
+  }
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  > * {
+    margin-bottom: 0;
+  }
+}

@@ -4,11 +4,17 @@
     .top-bar .menu.left {
       display: none; } }
 .top-bar .button-google {
-  padding: 0;
-  width: 140px;
-  height: auto; }
+  padding: 0; }
   .top-bar .button-google img {
-    height: 100%;
-    width: 100%; }
+    max-width: 140px; }
+
+.button-google img {
+  max-width: 200px; }
+
+.button-container {
+  display: flex;
+  align-items: center; }
+  .button-container > * {
+    margin-bottom: 0; }
 
 /*# sourceMappingURL=main.css.map */

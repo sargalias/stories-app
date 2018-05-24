@@ -23,9 +23,7 @@
         <li><a href="/auth/logout">Logout</a></li>
       {{else}}
         <li><a href="/stories">Stories</a></li>
-        <li><a href="/auth/google" class="button-google">
-          <img src="/assets/img/btn_google_signin_dark_pressed_web@2x.png" alt="">
-        </a></li>
+        <li>{{> 'google-login-button' }}</li>
       {{/if}}
     </ul>
   </div>
