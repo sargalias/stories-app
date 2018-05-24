@@ -5,13 +5,14 @@ const Comment = require('../models/Comment');
 const async = require('async');
 
 
-function createStory(authorId, title, body, allowComments=true, privacy='PUBLIC') {
+function createStory(authorId, authorName, title, body, allowComments=true, privacy='PUBLIC') {
     let newStory = {};
     newStory.title = title;
     newStory.body = body;
     newStory.allowComments = allowComments;
-    newStory.private = privacy;
+    newStory.privacy = privacy;
     newStory.authorId = authorId;
+    newStory.authorName = authorName;
     return newStory;
 }
 
@@ -33,31 +34,31 @@ db.dropDatabase((err) => {
     User.create(newUser, (err, user) => {
         async.parallel([
             function(callback) {
-                let newStory = createStory( user.id, 'Title: 1', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", );
+                let newStory = createStory( user.id, user.name, 'Title: 1', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory(user.id, 'Title: 2', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'PRIVATE');
+                let newStory = createStory(user.id, user.name, 'Title: 2', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'PRIVATE');
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 3', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
+                let newStory = createStory( user.id, user.name, 'Title: 3', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 4', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'UNLISTED' );
+                let newStory = createStory( user.id, user.name, 'Title: 4', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'UNLISTED' );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 5', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
+                let newStory = createStory( user.id, user.name, 'Title: 5', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
@@ -73,31 +74,31 @@ db.dropDatabase((err) => {
     User.create(secondUser, (err, user) => {
         async.parallel([
             function(callback) {
-                let newStory = createStory( user.id, 'Title: 6', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", );
+                let newStory = createStory( user.id, user.name, 'Title: 6', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 7', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'PRIVATE' );
+                let newStory = createStory( user.id, user.name, 'Title: 7', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'PRIVATE' );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 8', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
+                let newStory = createStory( user.id, user.name, 'Title: 8', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 9', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'UNLISTED' );
+                let newStory = createStory( user.id, user.name, 'Title: 9', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", true, 'UNLISTED' );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);
                 });
             }, function(callback) {
-                let newStory = createStory( user.id, 'Title: 10', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
+                let newStory = createStory( user.id, user.name, 'Title: 10', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", false );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);

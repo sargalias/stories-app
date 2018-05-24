@@ -8,6 +8,7 @@ module.exports.index = (req, res, next) => {
             if (err) {
                 return next(err);
             }
+            console.log(stories);
             res.render('stories/index', {stories: stories});
         });
 };

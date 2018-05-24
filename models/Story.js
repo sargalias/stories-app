@@ -8,6 +8,7 @@ const storySchema = new mongoose.Schema({
     published: {type: Date, default: Date.now, required: true},
     allowComments: {type: Boolean, default: true, required: true},
     authorId: {type: String, required: true},
+    authorName: {type: String, required: true},
     comments: [Comment.schema]
 });
 
