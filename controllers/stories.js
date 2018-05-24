@@ -1,5 +1,6 @@
 const Story = require('../models/Story');
 const {checkSchema, validationResult} = require('express-validator/check');
+const {removeScriptTags} = require('../helpers/remove-script-tags');
 
 
 module.exports.index = (req, res, next) => {
@@ -62,6 +63,11 @@ module.exports.storyValidation = checkSchema({
         custom: {
             options: (val, {req}) => {
                 return val.match(/^<p>&nbsp;<\/p>$/) === null;
+            }
+        },
+        customSanitizer: {
+            options: (val) => {
+                return removeScriptTags(val);
             }
         }
     }

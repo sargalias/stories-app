@@ -16,7 +16,7 @@
       </div>
       <div>
         <label for="allowComments">Allow Comments:
-          <input type="checkbox" name="allowComments">
+          <input type="checkbox" name="allowComments" value="true">
         </label>
       </div>
       <div>
@@ -35,7 +35,8 @@
 <script>
   ClassicEditor
       .create( document.querySelector('#editor'), {
-          toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+          toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+          removePlugins: ['Heading']
       })
       .catch( error => console.error(error))
 </script>

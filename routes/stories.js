@@ -9,7 +9,7 @@ router.get('/', sc.index);
 router.get('/new', sc.new);
 
 // Create
-router.post('/', sc.create);
+router.post('/', sc.storyValidation, sc.create);
 
 // Show
 router.get('/:story_id', sc.show);
