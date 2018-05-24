@@ -18,7 +18,7 @@ router.get('/:story_id', sc.show);
 router.get('/:story_id/edit', sc.edit);
 
 // Put
-router.put('/:story_id', (req, res) => {res.send('You reached the PUT route')});
+router.put('/:story_id', sc.update);
 
 
 module.exports = router;

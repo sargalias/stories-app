@@ -26,11 +26,8 @@ module.exports.new = (req, res, next) => {
 
 function createValidationErrors(req, res, next) {
     const errors = validationResult(req);
-    const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
+    const storyData = matchedData(req, {locations: ['body']});
     if (!errors.isEmpty()) {
-        errors.array({onlyFirstError: true}).forEach((error) => {
-            console.log(error.msg);
-        });
         return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
     return next();
@@ -93,3 +90,31 @@ module.exports.edit = (req, res, next) => {
         res.render('stories/edit', {story: story});
     });
 };
+
+function createValidationErrors2(req, res, next) {
+    const errors = validationResult(req);
+    const storyData = matchedData(req, {locations: ['body']});
+    if (!errors.isEmpty()) {
+        return res.render('stories/edit', {errors: errors.array({onlyFirstError: true}), story: storyData})
+    }
+    return next();
+}
+
+function updateStory(req, res, next) {
+    const storyData = matchedData(req, {locations: ['body']});
+    Story.findByIdAndUpdate(req.params.story_id, {
+        $set: {title: storyData.title, privacy: storyData.privacy, allowComments: storyData.allowComments, body: storyData.body}
+    }, (err, story) => {
+        if (err) {
+            return next(err);
+        }
+        if (!story) {
+            let err = new Error('Story not found');
+            err.statusCode = 404;
+            return next(err);
+        }
+        res.redirect(`/stories/${story.id}`);
+    });
+}
+
+module.exports.update = [storyValidation, createValidationErrors2, updateStory];
