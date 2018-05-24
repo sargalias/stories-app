@@ -18,7 +18,11 @@ module.exports.new = (req, res, next) => {
 };
 
 module.exports.create = (req, res, next) => {
-    res.send('Reached create post route');
+    // Takes html.
+    // Must remove script tags
+    // And save HTML as text
+    // Then show the text as HTML
+    res.send(req.body);
 };
 
 module.exports.show = (req, res, next) => {

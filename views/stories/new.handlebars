@@ -21,7 +21,7 @@
       </div>
       <div>
         <label for="body">Body:</label>
-        <textarea name="body" id="body" rows="3"></textarea>
+        <textarea name="body" id="editor" rows="3"></textarea>
       </div>
       <div>
           <button type="submit" class="button primary">Submit</button>
@@ -29,3 +29,13 @@
     </form>
   </div>
 </div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
+
+<script>
+  ClassicEditor
+      .create( document.querySelector('#editor'), {
+          toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+      })
+      .catch( error => console.error(error))
+</script>
