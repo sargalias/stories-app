@@ -6,7 +6,7 @@
           <div class="story callout primary">
               <h3 class="title">{{title}}</h3>
               <p class="metadata">Published on DATE by <a href="/users/{{authorId}}">{{authorName}}</a></p>
-              <p class="body">{{{body}}}</p>
+              <p class="body">{{trimBody (trimTags body)}}</p>
               <a href="/stories/{{id}}" class="button primary">Read More</a>
           </div>
       {{/each}}

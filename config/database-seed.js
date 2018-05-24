@@ -34,7 +34,7 @@ db.dropDatabase((err) => {
     User.create(newUser, (err, user) => {
         async.parallel([
             function(callback) {
-                let newStory = createStory( user.id, user.name, 'Title: 1', "Bob is awesome\nBob is indeed awesome.<strong>Bolded stuff</strong>", );
+                let newStory = createStory( user.id, user.name, 'Title: 1', "<p>Bob is awesome.</p><p>Bob is indeed awesome. <strong>Bolded stuff</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur consectetur corporis culpa, cum dicta dolor dolore doloremque eius est fuga in iste, magni natus non, porro temporibus voluptatum. Quia.", );
                 Story.create(newStory, (err, story) => {
                     user.stories.push(story);
                     user.save(callback);

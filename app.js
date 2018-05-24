@@ -14,6 +14,7 @@ const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
 const exphbs = require('express-handlebars');
+const exphbsHelpers = require('./helpers/handlebars');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -26,9 +27,17 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.engine('handlebars', exphbs({
+
+// Handlebars
+const hbs = exphbs.create({
+    helpers: {
+        footerDate: exphbsHelpers.footerDate,
+        trimTags: exphbsHelpers.trimTags,
+        trimBody: exphbsHelpers.trimBody,
+    },
     defaultLayout: 'main'
-}));
+});
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Express-session config
