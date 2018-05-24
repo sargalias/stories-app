@@ -13,6 +13,14 @@ module.exports.index = (req, res, next) => {
         });
 };
 
+module.exports.new = (req, res, next) => {
+    res.render('stories/new');
+};
+
+module.exports.create = (req, res, next) => {
+    res.send('Reached create post route');
+};
+
 module.exports.show = (req, res, next) => {
     Story.findById(req.params.story_id, (err, story) => {
         if (err) {
@@ -26,3 +34,4 @@ module.exports.show = (req, res, next) => {
         }
     });
 };
+
