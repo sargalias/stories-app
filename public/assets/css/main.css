@@ -16,6 +16,11 @@
   align-items: center; }
   .button-container > * {
     margin-bottom: 0; }
+  .button-container .button {
+    margin-right: 1rem;
+    margin-bottom: 1rem; }
+  .button-container .form {
+    margin: 0; }
 
 footer {
   padding: 2rem 0;
@@ -33,8 +38,5 @@ body {
   display: grid;
   min-height: 100%;
   grid-template-rows: 1fr auto; }
-
-.button-container .button {
-  margin-right: 1rem; }
 
 /*# sourceMappingURL=main.css.map */

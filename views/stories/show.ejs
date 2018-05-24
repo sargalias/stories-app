@@ -9,6 +9,12 @@
           <div class="body">
               <%- story.body %>
           </div>
+            <div class="button-container">
+                <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
+                <form action="/stories/<%= story.id %>?_method=DELETE">
+                    <button class="button alert">Delete</button>
+                </form>
+            </div>
         </div>
       <% } else { %>
         <h1 class="title">Story Not Found</h1>
