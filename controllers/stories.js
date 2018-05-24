@@ -89,7 +89,18 @@ module.exports.edit = (req, res, next) => {
 function updateStory(req, res, next) {
     const errors = validationResult(req);
     const storyData = matchedData(req, {locations: ['body']});
-    Story.findById(req.params.story_id, (err, story) => {
+    storyData.id = req.params.story_id;
+    if (!errors.isEmpty()) {
+        return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
+    }
+    Story.findByIdAndUpdate(req.params.story_id, {
+        $set: {
+            title: storyData.title,
+            privacy: storyData.privacy,
+            allowComments: storyData.allowComments === 'true',
+            body: storyData.body
+        }
+    }, (err, story) => {
         if (err) {
             return next(err);
         }
@@ -98,21 +109,7 @@ function updateStory(req, res, next) {
             err.statusCode = 404;
             return next(err);
         }
-        if (!errors.isEmpty()) {
-            storyData.id = story.id;
-            return res.render('stories/edit', {errors: errors.array({onlyFirstError: true}), story: storyData})
-        }
-        // Story data is good
-        story.title = storyData.title;
-        story.privacy = storyData.privacy;
-        story.allowComments = storyData.allowComments === 'true';
-        story.body = storyData.body;
-        story.save((err) => {
-            if (err) {
-                return next(err);
-            }
-            res.redirect(`/stories/${story.id}`);
-        });
+        res.redirect(`/stories/${story.id}`);
     });
 }
 
