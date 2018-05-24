@@ -19,3 +19,7 @@ module.exports.trimBody = (body) => {
 module.exports.formatDate = (date) => {
     return moment(date).format('DD/MM/YYYY');
 };
+
+module.exports.ifEqualsStr = function(str1, str2, options) {
+    return str1 === str2 ? options.fn(this) : options.inverse(this);
+};

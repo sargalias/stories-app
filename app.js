@@ -34,7 +34,8 @@ const hbs = exphbs.create({
         footerDate: exphbsHelpers.footerDate,
         trimTags: exphbsHelpers.trimTags,
         trimBody: exphbsHelpers.trimBody,
-        formatDate: exphbsHelpers.formatDate
+        formatDate: exphbsHelpers.formatDate,
+        ifEqualsStr: exphbsHelpers.ifEqualsStr
     },
     defaultLayout: 'main'
 });
