@@ -1,3 +1,5 @@
+<%- include('./partials/header'); %>
+
 <div class="callout primary">
     <div class="grid-container">
     <h1>Welcome</h1>
@@ -5,11 +7,13 @@
     <p>The ideas can be public so everyone can view them, private so they're only visible to you, or unlisted so only people with the link can view them.</p>
     <div class="button-container">
       <a href="/stories" class="button primary">View Stories</a>
-      {{# if user}}
-        <a href="/users/dashboard" class="button primary">Dashboard</a>
-      {{else}}
-        {{> 'google-login-button' }}
-      {{/if}}
+        <% if (user !== null) { %>
+            <a href="/users/dashboard" class="button primary">Dashboard</a>
+        <% } else { %>
+            <%- include('./partials/google-login-button'); %>
+        <% } %>
     </div>
   </div>
 </div>
+
+<%- include('./partials/footer'); %>

@@ -1,3 +1,6 @@
+const {checkSchema} = require('express-validator/check');
+const {removeScriptTags} = require('../helpers/views');
+
 module.exports.storyValidation = checkSchema({
     title: {
         in: ['body'],

@@ -1,0 +1,64 @@
+<%- include('../partials/header'); %>
+
+<div class="grid-container">
+  <div class="story callout primary">
+    <h1>Add Story</h1>
+    <form action="/stories" method="POST">
+      <div>
+        <label for="title">Title:</label>
+          <% if (typeof story !== 'undefined' && story.title) { %>
+              <input type="text" id="title" name="title" value="<%= story.title %>">
+          <% } else { %>
+              <input type="text" id="title" name="title">
+          <% } %>
+      </div>
+      <div>
+        <label for="privacy">Status:</label>
+        <select name="privacy" id="privacy">
+            <% if (typeof story !== 'undefined' && story.privacy) { %>
+                <option value="PUBLIC" <%= story.privacy === 'PUBLIC' ? 'selected' : ''%>>Public</option>
+                <option value="PRIVATE" <%= story.privacy === 'PRIVATE' ? 'selected' : ''%>>Private</option>
+                <option value="UNLISTED" <%= story.privacy === 'UNLISTED' ? 'selected' : ''%>>Unlisted</option>
+            <% } else { %>
+                <option value="PUBLIC" checked>Public</option>
+                <option value="PRIVATE">Private</option>
+                <option value="UNLISTED">Unlisted</option>
+            <% } %>
+        </select>
+      </div>
+      <div>
+        <label for="allowComments">Allow Comments:
+        <% if (typeof story !== 'undefined' && story.allowComments) { %>
+            <input type="checkbox" name="allowComments" id="allowComments" value="true" checked>
+        <% } else { %>
+            <input type="checkbox" name="allowComments" id="allowComments" value="true">
+        <% } %>
+        </label>
+      </div>
+      <div>
+        <label for="body">Body:</label>
+          <% if (typeof story !== 'undefined' && story.body) { %>
+              <textarea name="body" id="body" rows="3"><%- story.body %></textarea>
+          <% } else { %>
+              <textarea name="body" id="body" rows="3"></textarea>
+          <% } %>
+      </div>
+      <div>
+          <button type="submit" class="button primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
+
+<script>
+  ClassicEditor
+      .create( document.querySelector('#body'), {
+          toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+          removePlugins: ['Heading']
+      })
+      .catch( error => console.error(error))
+</script>
+
+<%- include('../partials/footer'); %>

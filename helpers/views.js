@@ -1,7 +1,7 @@
 const moment = require('moment');
 
-module.exports.footerDate = () => {
-    return new Date().getFullYear();
+module.exports.removeScriptTags = (input) => {
+    return input.replace(/<.*?script.*?>.*?<\/.*?script.*?>/igm, '');
 };
 
 module.exports.trimTags = (body) => {
@@ -18,8 +18,4 @@ module.exports.trimBody = (body) => {
 
 module.exports.formatDate = (date) => {
     return moment(date).format('DD/MM/YYYY');
-};
-
-module.exports.ifEqualsStr = function(str1, str2, options) {
-    return str1 === str2 ? options.fn(this) : options.inverse(this);
 };

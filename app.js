@@ -5,8 +5,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
-const exphbs = require('express-handlebars');
-const exphbsHelpers = require('./helpers/handlebars');
+const viewHelpers = require('./helpers/views');
 
 // General express configuration
 const app = express();
@@ -17,8 +16,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// View engine / Handlebars
-require('./config/handlebars')(app);
+// View engine ejs
+app.set('view engine', 'ejs');
 
 // Express-session config
 require('./config/session')(app);
@@ -28,6 +27,8 @@ require('./config/auth')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Global app vars
+app.locals.viewHelpers = viewHelpers;
 // Global vars
 app.use((req, res, next) => {
     res.locals.user = req.user || null;

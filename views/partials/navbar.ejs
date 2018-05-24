@@ -12,7 +12,7 @@
   <div class="top-bar-right">
     <ul class="dropdown menu" data-dropdown-menu>
       <li><a href="/">Home</a></li>
-      {{# if user}}
+      <% if (user) { %>
         <li class="has-submenu">
           <a href="/stories">Stories</a>
           <ul class="submenu menu vertical" data-submenu>
@@ -21,10 +21,10 @@
         </li>
         <li><a href="/users/dashboard">Dashboard</a></li>
         <li><a href="/auth/logout">Logout</a></li>
-      {{else}}
+      <% } else { %>
         <li><a href="/stories">Stories</a></li>
-        <li>{{> 'google-login-button' }}</li>
-      {{/if}}
+        <li><%- include('./google-login-button'); %></li>
+      <% } %>
     </ul>
   </div>
 </div>

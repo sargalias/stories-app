@@ -1,8 +1,7 @@
 const Story = require('../models/Story');
 const User = require('../models/User');
-const {checkSchema, validationResult} = require('express-validator/check');
+const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
-const {removeScriptTags} = require('../helpers/remove-script-tags');
 const async = require('async');
 const {storyValidation} = require('../helpers/storyValidation');
 
@@ -32,9 +31,11 @@ function createValidationErrors(req, res, next) {
         console.log(errors.array());
         return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
+    return next();
 }
 
 function createStory(req, res, next) {
+    const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
     storyData.allowComments = storyData.allowComments === 'true';
     storyData.authorId = req.user.id;
     storyData.authorName = req.user.name;

@@ -1,0 +1,19 @@
+<%- include('../partials/header'); %>
+
+<div class="grid-container">
+  <div class="stories">
+    <% if (typeof story !== 'undefined') { %>
+        <div class="story callout primary">
+          <h1 class="title"><%= story.title %></h1>
+          <p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
+          <div class="body">
+              <%- story.body %>
+          </div>
+        </div>
+      <% } else { %>
+        <h1 class="title">Story Not Found</h1>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>
