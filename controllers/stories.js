@@ -28,7 +28,9 @@ function createValidationErrors(req, res, next) {
     const errors = validationResult(req);
     const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
     if (!errors.isEmpty()) {
-        console.log(errors.array());
+        errors.array({onlyFirstError: true}).forEach((error) => {
+            console.log(error.msg);
+        });
         return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
     return next();
