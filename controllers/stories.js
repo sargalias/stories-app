@@ -12,3 +12,17 @@ module.exports.index = (req, res, next) => {
             res.render('stories/index', {stories: stories});
         });
 };
+
+module.exports.show = (req, res, next) => {
+    Story.findById(req.params.story_id, (err, story) => {
+        if (err) {
+            return next(err);
+        } else if (!story) {
+            let err = new Error('Story not found');
+            err.statusCode = 404;
+            return next(err);
+        } else {
+            res.render('stories/show', {story: story});
+        }
+    });
+};

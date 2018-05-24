@@ -1,0 +1,14 @@
+<div class="grid-container">
+  <div class="stories">
+    {{#with story}}
+    <div class="story callout primary">
+      <h1 class="title">{{title}}</h1>
+      <p class="metadata">Published on {{formatDate published}} by <a href="/users/{{authorId}}">{{authorName}}</a></p>
+      <div class="body">
+        {{{body}}}
+      </div>
+      <a href="/stories/{{id}}" class="button primary">Read More</a>
+    </div>
+    {{/with}}
+  </div>
+</div>
