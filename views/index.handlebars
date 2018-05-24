@@ -5,7 +5,11 @@
     <p>The ideas can be public so everyone can view them, private so they're only visible to you, or unlisted so only people with the link can view them.</p>
     <div class="button-container">
       <a href="/stories" class="button primary">View Stories</a>
-      {{> 'google-login-button' }}
+      {{# if user}}
+        <a href="/users/dashboard" class="button primary">Dashboard</a>
+      {{else}}
+        {{> 'google-login-button' }}
+      {{/if}}
     </div>
   </div>
 </div>
