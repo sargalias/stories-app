@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports.footerDate = () => {
     return new Date().getFullYear();
 };
@@ -12,4 +14,8 @@ module.exports.trimBody = (body) => {
         return words.join(' ');
     }
     return words.splice(0, 20).join(' ') + '...';
+};
+
+module.exports.formatDate = (date) => {
+    return moment(date).format('DD/MM/YYYY');
 };
