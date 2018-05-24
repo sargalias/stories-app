@@ -1,5 +1,6 @@
 const Story = require('../models/Story');
 const {checkSchema, validationResult} = require('express-validator/check');
+const {matchedData} = require('express-validator/filter');
 const {removeScriptTags} = require('../helpers/remove-script-tags');
 
 
@@ -35,6 +36,7 @@ module.exports.storyValidation = checkSchema({
         errorMessage: 'Invalid choice for status',
         exists: true,
         custom: {
+            errorMessage: 'Invalid value for Allow Comments',
             options: (val, {req}) => {
                 return val.match(/^(PUBLIC|PRIVATE|UNLISTED)$/) != null;
             }
@@ -74,15 +76,15 @@ module.exports.storyValidation = checkSchema({
 });
 
 module.exports.create = (req, res, next) => {
-    // Takes html.
-    // Must remove script tags
-    // And save HTML as text
-    // Then show the text as HTML
     const errors = validationResult(req);
+    const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
+    console.log(storyData);
     if (!errors.isEmpty()) {
         console.log(errors.array());
+        return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
-    res.send(req.body);
+    // add story to database and redirect
+    // res.redirect(`/stories/${story.id}`);
 };
 
 module.exports.show = (req, res, next) => {
