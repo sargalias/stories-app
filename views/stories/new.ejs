@@ -7,14 +7,14 @@
       <div>
         <label for="title">Title:</label>
           <% if (typeof story !== 'undefined' && story.title) { %>
-              <input type="text" id="title" name="title" value="<%= story.title %>">
+              <input type="text" id="title" name="title" value="<%= story.title %>" required>
           <% } else { %>
-              <input type="text" id="title" name="title">
+              <input type="text" id="title" name="title" required>
           <% } %>
       </div>
       <div>
         <label for="privacy">Status:</label>
-        <select name="privacy" id="privacy">
+        <select name="privacy" id="privacy" required>
             <% if (typeof story !== 'undefined' && story.privacy) { %>
                 <option value="PUBLIC" <%= story.privacy === 'PUBLIC' ? 'selected' : ''%>>Public</option>
                 <option value="PRIVATE" <%= story.privacy === 'PRIVATE' ? 'selected' : ''%>>Private</option>
