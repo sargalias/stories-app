@@ -1,11 +1,17 @@
 <div class="grid-container">
   <h1>Stories</h1>
   <div class="stories">
-    <div class="story callout primary">
-      <h3 class="title">Story title</h3>
-      <p class="metadata">By <a href="#">Author Name</a></p>
-      <p class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad alias aliquid, deleniti dolore eligendi eos error id ipsum magni, necessitatibus omnis provident recusandae repellat ullam. Alias minima optio voluptatibus.</p>
-      <a href="" class="button primary">Read More</a>
-    </div>
+    {{#if stories }}
+      {{#each stories}}
+          <div class="story callout primary">
+              <h3 class="title">{{title}}</h3>
+              <p class="metadata">Published on DATE by <a href="/users/{{authorId}}">{{authorName}}</a></p>
+              <p class="body">{{{body}}}</p>
+              <a href="/stories/{{id}}" class="button primary">Read More</a>
+          </div>
+      {{/each}}
+    {{else}}
+      <h3>No public stories found</h3>
+    {{/if}}
   </div>
 </div>
