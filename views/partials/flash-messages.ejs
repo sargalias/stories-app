@@ -1,0 +1,12 @@
+<div class="flash-messages grid-container">
+    <% Object.keys(messages).forEach((type) => { %>
+        <% messages[type].forEach((message) => { %>
+            <div class="callout <%= type %>" data-closable>
+                <span>message</span>
+                <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% }) %>
+    <% }) %>
+</div>

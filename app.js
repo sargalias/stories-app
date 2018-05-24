@@ -7,6 +7,7 @@ const logger = require('morgan');
 const passport = require('passport');
 const viewHelpers = require('./helpers/views');
 
+
 // General express configuration
 const app = express();
 app.use(logger('dev'));
@@ -26,6 +27,10 @@ require('./config/session')(app);
 require('./config/auth')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Flash messages
+require('./config/flash-messages')(app);
+
 
 // Global app vars
 app.locals.viewHelpers = viewHelpers;
