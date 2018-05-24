@@ -1,0 +1,32 @@
+<div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+  <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+  <div class="title-bar-title">Story Ideas</div>
+</div>
+
+<div class="top-bar" id="responsive-menu">
+  <div class="top-bar-left">
+    <ul class="menu left">
+      <li class="menu-text">Story Ideas</li>
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li><a href="/">Home</a></li>
+      {{# if user}}
+        <li class="has-submenu">
+          <a href="/stories">Stories</a>
+          <ul class="submenu menu vertical" data-submenu>
+            <li><a href="/stories/new">Add Story</a></li>
+          </ul>
+        </li>
+        <li><a href="/users/dashboard">Dashboard</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
+      {{else}}
+        <li><a href="/stories">Stories</a></li>
+        <li><a href="/auth/google" class="button-google">
+          <img src="/assets/img/btn_google_signin_dark_pressed_web@2x.png" alt="">
+        </a></li>
+      {{/if}}
+    </ul>
+  </div>
+</div>

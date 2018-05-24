@@ -1,0 +1,20 @@
+.top-bar {
+  .menu {
+    align-items: center;
+    &.left {
+      @media screen and (max-width: 639px) {
+        display: none;
+      }
+    }
+  }
+  .button-google {
+    padding: 0;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+    width: 140px;
+    height: auto;
+  }
+}
+

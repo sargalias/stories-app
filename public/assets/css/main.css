@@ -1,0 +1,14 @@
+.top-bar .menu {
+  align-items: center; }
+  @media screen and (max-width: 639px) {
+    .top-bar .menu.left {
+      display: none; } }
+.top-bar .button-google {
+  padding: 0;
+  width: 140px;
+  height: auto; }
+  .top-bar .button-google img {
+    height: 100%;
+    width: 100%; }
+
+/*# sourceMappingURL=main.css.map */
