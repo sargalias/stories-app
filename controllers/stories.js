@@ -1,7 +1,9 @@
 const Story = require('../models/Story');
+const User = require('../models/User');
 const {checkSchema, validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const {removeScriptTags} = require('../helpers/remove-script-tags');
+const async = require('async');
 
 
 module.exports.index = (req, res, next) => {
@@ -78,13 +80,35 @@ module.exports.storyValidation = checkSchema({
 module.exports.create = (req, res, next) => {
     const errors = validationResult(req);
     const storyData = matchedData(req, {onlyValidData: false, locations: ['body']});
-    console.log(storyData);
     if (!errors.isEmpty()) {
         console.log(errors.array());
         return res.render('stories/new', {errors: errors.array({onlyFirstError: true}), story: storyData})
     }
-    // add story to database and redirect
-    // res.redirect(`/stories/${story.id}`);
+    storyData.allowComments = storyData.allowComments === 'true';
+    storyData.authorId = req.user.id;
+    storyData.authorName = req.user.name;
+    let newStory = new Story(storyData);
+    async.parallel({
+        storySave: function(cb) {
+            newStory.save(cb);
+        },
+        userSave: function(cb) {
+            User.findByIdAndUpdate(req.user.id, {
+                $push: {stories: newStory}
+            }, {'new': true}, cb);
+        }
+    }, function(err, results) {
+        if (err) {
+            // Delete story from user and stories collections
+            Story.findByIdAndRemove(newStory.id);
+            User.findById(req.user.id, (err, user) => {
+                user.stories.id(newStory._id).remove();
+            });
+            return next(err);
+        }
+        res.redirect(`/stories/${results.storySave.id}`);
+
+    });
 };
 
 module.exports.show = (req, res, next) => {
