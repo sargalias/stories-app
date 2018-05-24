@@ -1,13 +1,5 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
-// Initialise database
-const db = require('./config/database');
-
-// Seed database
-if (process.env.SEED_DATABASE === 'true') {
-    require('./config/database-seed');
-}
+// Initial configuration
+require('./config/initialization');
 
 const express = require('express');
 const path = require('path');
@@ -16,35 +8,17 @@ const passport = require('passport');
 const exphbs = require('express-handlebars');
 const exphbsHelpers = require('./helpers/handlebars');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const authRouter = require('./routes/auth');
-const storiesRouter = require('./routes/stories');
-
+// General express configuration
 const app = express();
-
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Handlebars
-const hbs = exphbs.create({
-    helpers: {
-        footerDate: exphbsHelpers.footerDate,
-        trimTags: exphbsHelpers.trimTags,
-        trimBody: exphbsHelpers.trimBody,
-        formatDate: exphbsHelpers.formatDate,
-        ifEqualsStr: exphbsHelpers.ifEqualsStr
-    },
-    defaultLayout: 'main'
-});
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-
-// Body Parser
+// Body parser
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
+
+// View engine / Handlebars
+require('./config/handlebars')(app);
 
 // Express-session config
 require('./config/session')(app);
@@ -60,6 +34,12 @@ app.use((req, res, next) => {
     next();
 });
 
+
+// Routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
+const storiesRouter = require('./routes/stories');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
