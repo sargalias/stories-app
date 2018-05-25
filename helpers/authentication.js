@@ -23,7 +23,12 @@ const isStoryPrivate = (req, res, next) => {
     });
 };
 
-module.exports.isLoggedIn = (req, res, next) => {
+function isLoggedIn(req, res, next) {
+    return req.user;
+}
+
+
+module.exports.ensureLoggedIn = (req, res, next) => {
     if (req.user) {
         return next();
     } else {
@@ -41,8 +46,8 @@ module.exports.ensureUserOwnsStory = (req, res, next) => {
     }
 };
 
-module.exports.storyAccessScontrol = (req, res, next) => {
-    if (userOwnsStory(req, res, next) || !isStoryPrivate(req, res, next)) {
+module.exports.ensureUserHasAccess = (req, res, next) => {
+    if (isLoggedIn(req, res, next) && userOwnsStory(req, res, next) || !isStoryPrivate(req, res, next)) {
         return next();
     } else {
         req.flash('alert', 'Not authorized');

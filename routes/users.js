@@ -11,6 +11,6 @@ router.get('/dashboard', function(req, res, next) {
 
 router.get('/:user_id', uc.show);
 
-router.get('/dashboard', ah.isLoggedIn, uc.dashboard);
+router.get('/dashboard', ah.ensureLoggedIn, uc.dashboard);
 
 module.exports = router;

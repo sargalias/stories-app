@@ -7,7 +7,7 @@
     <% if (typeof stories !== 'undefined') { %>
     <% for (let story of stories) { %>
     <div class="story callout primary">
-      <h3 class="title"><%= story.title %></h3>
+      <h3 class="title"><a href="/stories/<%= story.id %>"><%= story.title %></a></h3>
       <p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
       <div class="body">
         <%- viewHelpers.trimBody(story.body); %>

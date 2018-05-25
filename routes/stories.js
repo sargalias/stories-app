@@ -7,21 +7,21 @@ const ah = authHelpers = require('../helpers/authentication');
 router.get('/', sc.index);
 
 // New
-router.get('/new', ah.isLoggedIn, sc.new);
+router.get('/new', ah.ensureLoggedIn, sc.new);
 
 // Create
-router.post('/', ah.isLoggedIn, sc.create);
+router.post('/', ah.ensureLoggedIn, sc.create);
 
 // Show
-router.get('/:story_id',ah.isLoggedIn, ah.storyAccessScontrol, sc.show);
+router.get('/:story_id', ah.ensureUserHasAccess, sc.show);
 
 // Edit
-router.get('/:story_id/edit', ah.isLoggedIn, ah.ensureUserOwnsStory, sc.edit);
+router.get('/:story_id/edit', ah.ensureLoggedIn, ah.ensureUserOwnsStory, sc.edit);
 
 // Put
-router.put('/:story_id', ah.isLoggedIn, ah.ensureUserOwnsStory, sc.update);
+router.put('/:story_id', ah.ensureLoggedIn, ah.ensureUserOwnsStory, sc.update);
 
-router.delete('/:story_id', ah.isLoggedIn, ah.ensureUserOwnsStory, sc.delete);
+router.delete('/:story_id', ah.ensureLoggedIn, ah.ensureUserOwnsStory, sc.delete);
 
 
 module.exports = router;

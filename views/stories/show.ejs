@@ -3,21 +3,27 @@
 <div class="grid-container">
   <div class="stories">
     <% if (typeof story !== 'undefined') { %>
-        <div class="story callout primary">
-          <h1 class="title"><%= story.title %></h1>
-          <p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
-          <div class="body">
-              <%- story.body %>
-          </div>
-            <% if (user && user.id === story.authorId) { %>
-                <div class="button-container">
-                    <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
-                    <form action="/stories/<%= story.id %>?_method=DELETE" method="POST">
-                        <button class="button alert">Delete</button>
-                    </form>
-                </div>
-            <% } %>
-        </div>
+      <% if (story.privacy === 'PRIVATE') { %>
+          <div class="story callout alert">
+      <% } else if (story.privacy === 'UNLISTED') { %>
+          <div class="story callout warning">
+      <% } else { %>
+          <div class="story callout primary">
+      <% } %>
+              <h1 class="title"><%= story.title %></h1>
+              <p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
+              <div class="body">
+                  <%- story.body %>
+              </div>
+                <% if (user && user.id === story.authorId) { %>
+                    <div class="button-container">
+                        <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
+                        <form action="/stories/<%= story.id %>?_method=DELETE" method="POST">
+                            <button class="button alert">Delete</button>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
       <% } else { %>
         <h1 class="title">Story Not Found</h1>
     <% } %>
