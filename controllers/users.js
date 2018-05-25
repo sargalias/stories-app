@@ -9,3 +9,7 @@ module.exports.show = (req, res, next) => {
         res.render('users/show', {stories: storiesToShow});
     });
 };
+
+module.exports.dashboard = (req, res, next) => {
+    res.render('users/dashboard');
+};
