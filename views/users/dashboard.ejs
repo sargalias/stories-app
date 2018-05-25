@@ -1,0 +1,42 @@
+<%- include('../partials/header'); %>
+
+<div class="grid-container">
+    <h1>Dashboard</h1>
+    <div class="stories">
+        <div class="flex">
+            <h2>Your stories</h2>
+            <a href="/stories/new" class="button primary">+ New Story</a>
+        </div>
+        <% if (user.stories) { %>
+            <% for (let story of user.stories) { %>
+                <% if (story.privacy === 'PRIVATE') { %>
+                    <div class="story callout alert">
+                <% } else if (story.privacy === 'UNLISTED') { %>
+                    <div class="story callout warning">
+                <% } else { %>
+                    <div class="story callout primary">
+                <% } %>
+                        <h3 class="title"><%= story.title %></h3>
+                        <p><strong>Privacy status:</strong> <%= story.privacy.toLowerCase() %></p>
+                        <p><strong>Allow comments:</strong> <%= story.allowComments ? 'Yes' : 'No' %></p>
+                        <p class="metadata"><strong>Published on:</strong> <%= viewHelpers.formatDate(story.published); %></p>
+                        <p><strong>Body:</strong></p>
+                        <div class="body">
+                            <%- story.body %>
+                        </div>
+                        <div class="button-container">
+                            <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
+                            <form action="/stories/<%= story.id %>?_method=DELETE" method="POST">
+                                <button class="button alert">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+            <% } %>
+        <% } else { %>
+            <h3>You don't have any stories yet. </h3>
+        <% } %>
+    </div>
+</div>
+
+
+<%- include('../partials/footer'); %>

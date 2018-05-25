@@ -1,3 +1,11 @@
+html {
+  height: 100%; }
+
+body {
+  display: grid;
+  min-height: 100%;
+  grid-template-rows: 1fr auto; }
+
 .top-bar .menu {
   align-items: center; }
   @media screen and (max-width: 639px) {
@@ -31,12 +39,16 @@ footer {
   footer p {
     margin-bottom: 0; }
 
-html {
-  height: 100%; }
+.body {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+  margin-bottom: 1rem; }
+  .body > *:last-child {
+    margin-bottom: 0; }
 
-body {
-  display: grid;
-  min-height: 100%;
-  grid-template-rows: 1fr auto; }
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
 
 /*# sourceMappingURL=main.css.map */
