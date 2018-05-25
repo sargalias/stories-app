@@ -41,7 +41,7 @@ module.exports.ensureUserOwnsStory = (req, res, next) => {
     }
 };
 
-module.exports.ensureStoryNotPrivateOrUserOwnsStory = (req, res, next) => {
+module.exports.storyAccessScontrol = (req, res, next) => {
     if (userOwnsStory(req, res, next) || !isStoryPrivate(req, res, next)) {
         return next();
     } else {
