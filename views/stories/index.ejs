@@ -3,20 +3,7 @@
 <div class="grid-container">
   <h1>Stories</h1>
   <p>Public stories written by users.</p>
-  <div class="stories">
-    <% if (typeof stories !== 'undefined') { %>
-      <% for (let story of stories) { %>
-          <div class="story callout primary">
-            <h3 class="title"><%= story.title %></h3>
-            <p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
-            <p class="body"><%- viewHelpers.trimBody(story.body); %></p>
-            <a href="/stories/<%= story.id %>" class="button primary">Read More</a>
-          </div>
-      <% } %>
-    <% } else { %>
-      <h3>No public stories found</h3>
-    <% } %>
-  </div>
+  <%- include('../partials/stories-listing') %>
 </div>
 
 <%- include('../partials/footer'); %>

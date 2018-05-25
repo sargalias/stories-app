@@ -1,0 +1,9 @@
+<%- include('../partials/header'); %>
+
+<div class="grid-container">
+    <h1>Stories</h1>
+    <p>Public stories by <a href="/users/<%= user.id %>"><%= user.name %></a></p>
+    <%- include('../partials/stories-listing') %>
+</div>
+
+<%- include('../partials/footer'); %>
