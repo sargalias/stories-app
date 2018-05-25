@@ -102,18 +102,29 @@ function updateStory(req, res, next) {
             allowComments: storyData.allowComments === 'true',
             body: storyData.body
         }
-    }, (err, story) => {
+    }, {new: true}, (err, updatedStory) => {
         if (err) {
             return next(err);
         }
-        if (!story) {
+        if (!updatedStory) {
             let err = new Error('Story not found');
             err.statusCode = 404;
             return next(err);
         }
-        res.redirect(`/stories/${story.id}`);
+        // manually update user stories
+        req.user.stories.id(updatedStory._id).remove();
+        req.user.stories.push(updatedStory);
+        req.user.save((err) => {
+            if (err) {
+                console.error('Could not update user stories: Updated story id: ' + updatedStory.id);
+                return next(err);
+            } else {
+                res.redirect(`/stories/${updatedStory.id}`);
+            }
+        });
     });
 }
+
 
 
 module.exports.update = [storyValidation, updateStory];
