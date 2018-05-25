@@ -1,9 +1,11 @@
 const Story = require('../models/Story');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const async = require('async');
 const {storyValidation} = require('../helpers/storyValidation');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 module.exports.index = (req, res, next) => {
@@ -113,4 +115,27 @@ function updateStory(req, res, next) {
     });
 }
 
+
 module.exports.update = [storyValidation, updateStory];
+
+module.exports.delete = (req, res, next) => {
+    // No need to check story exists, as ownership will have been verified previously.
+    async.parallel({
+        storyDelete: function(callback) {
+            Story.findByIdAndRemove(req.params.story_id, callback);
+        },
+        // commentsDelete: function(callback) {
+        //     Comment.deleteMany({storyId: req.params.story_id}, callback);
+        // },
+        userDelete: function(callback) {
+            User.findByIdAndUpdate(req.user.id, {
+                $pull: {stories: {_id: ObjectId(req.params.story_id)}}
+            }, callback);
+        }
+    }, function(err, results) {
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('/stories');
+    });
+};

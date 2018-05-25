@@ -20,5 +20,7 @@ router.get('/:story_id/edit', sc.edit);
 // Put
 router.put('/:story_id', sc.update);
 
+router.delete('/:story_id', sc.delete);
+
 
 module.exports = router;
