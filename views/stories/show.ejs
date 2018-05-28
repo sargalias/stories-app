@@ -23,7 +23,26 @@
                         </form>
                     </div>
                 <% } %>
-            </div>
+
+          </div>
+              <!--Comments-->
+              <% if (story.allowComments) { %>
+                  <div class="comments">
+                      <h3>Comments</h3>
+                      <% for (let comment of story.comments) { %>
+                        <div class="comment">
+                            <div class="avatar">
+
+                            </div>
+                            <div class="metadata">
+                                Posted on <%= viewHelpers.formatDate(comment.date); %>
+                            </div>
+                            <div class="content"><%= comment.body %></div>
+                        </div>
+                      <% } %>
+
+                  </div>
+              <% } %>
       <% } else { %>
         <h1 class="title">Story Not Found</h1>
     <% } %>

@@ -51,4 +51,21 @@ footer {
   justify-content: space-between;
   align-items: center; }
 
+.comment {
+  display: grid;
+  grid-template-areas: "av md" "av ct";
+  grid-template-columns: 100px 1fr; }
+  .comment .avatar {
+    width: 100px;
+    height: 100px;
+    grid-area: av; }
+    .comment .avatar img {
+      width: 100px;
+      height: 100px;
+      display: block; }
+  .comment .metadata {
+    grid-area: md; }
+  .comment .content {
+    grid-area: ct; }
+
 /*# sourceMappingURL=main.css.map */

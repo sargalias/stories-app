@@ -73,3 +73,28 @@ footer {
   justify-content: space-between;
   align-items: center;
 }
+
+
+.comment {
+  display: grid;
+  grid-template-areas:
+          "av md"
+          "av ct";
+  grid-template-columns: 100px 1fr;
+  .avatar {
+    width: 100px;
+    height: 100px;
+    grid-area: av;
+    img {
+      width: 100px;
+      height: 100px;
+      display: block;
+    }
+  }
+  .metadata {
+    grid-area: md;
+  }
+  .content {
+    grid-area: ct;
+  }
+}
