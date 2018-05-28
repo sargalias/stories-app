@@ -8,3 +8,24 @@
         })
         .catch( error => console.error(error))
 </script>
+
+<script>
+    const privacySelect = document.getElementById('privacy');
+    const calloutDiv = document.getElementById('story-form-cont');
+    privacySelect.addEventListener('change', calloutDivClass);
+
+    function calloutDivClass() {
+        let allClasses = ['primary', 'warning', 'alert'];
+        let correctClass;
+        if (privacySelect.value === 'UNLISTED')
+            correctClass = 'warning';
+        else if (privacySelect.value === 'PRIVATE')
+            correctClass = 'alert';
+        else
+            correctClass = 'primary';
+        for (let className of allClasses) {
+            calloutDiv.classList.remove(className);
+        }
+        calloutDiv.classList.add(correctClass);
+    }
+</script>
