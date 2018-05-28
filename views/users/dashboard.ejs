@@ -27,7 +27,7 @@
                         <div class="button-container">
                             <a href="/stories/<%= story.id %>" class="button primary">View Story</a>
                             <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
-                            <form action="/stories/<%= story.id %>?_method=DELETE" method="POST">
+                            <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
                                 <button class="button alert">Delete</button>
                             </form>
                         </div>
