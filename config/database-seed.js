@@ -20,6 +20,7 @@ function createUser(googleId, name) {
     return {
         googleId: googleId,
         name: name,
+        image: 'bob'
     };
 }
 
