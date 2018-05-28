@@ -1,5 +1,6 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../models/User');
+const ph = profileHelper = require('../helpers/userProfile');
 
 module.exports = function(passport) {
     passport.use(new GoogleStrategy({
@@ -8,13 +9,14 @@ module.exports = function(passport) {
         callbackURL: "/auth/google/callback"
     },
         function(accessToken, refreshToken, profile, done) {
+            console.log(profile._json.image.url);
             User.findOne({googleId: profile.id}, (err, user) => {
                 if (err) {
                     return done(err);
                 }
                 else if (!user) {
                     // Create user
-                    User.create({googleId: profile.id, name: profile.displayName}, (err, user) => {
+                    User.create({googleId: profile.id, name: profile.displayName, image: ph(profile)}, (err, user) => {
                         if (err) {
                             return done(err);
                         }
@@ -22,7 +24,8 @@ module.exports = function(passport) {
                     });
                 }
                 else {
-                    return done(null, user);
+                    user.image = ph(profile);
+                    user.save(callback);
                 }
             });
         }
