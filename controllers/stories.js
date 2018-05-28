@@ -54,6 +54,7 @@ function createStory(req, res, next) {
             });
             return next(err);
         }
+        req.flash('success', 'Story added');
         res.redirect(`/users/dashboard`);
     });
 }
@@ -119,6 +120,7 @@ function updateStory(req, res, next) {
                 console.error('Could not update user stories: Updated story id: ' + updatedStory.id);
                 return next(err);
             } else {
+                req.flash('success', 'Story edited');
                 res.redirect(`/users/dashboard`);
             }
         });
@@ -147,6 +149,7 @@ module.exports.delete = (req, res, next) => {
         if (err) {
             return next(err);
         }
+        res.redirect('success', 'Story deleted');
         return res.redirect('/stories');
     });
 };
