@@ -15,7 +15,6 @@ function createComment(req, res, next) {
         }
         return res.redirect('back');
     }
-    console.log(commentData);
     const comment = new Comment({
         storyId: req.params.story_id,
         body: commentData.commentText,
@@ -52,3 +51,46 @@ function createComment(req, res, next) {
 }
 
 module.exports.create = [commentValidation, createComment];
+
+function updateComment(req, res, next) {
+    const errors = validationResult(req);
+    const commentData = matchedData(req, {locations: ['body']});
+    if (!errors.isEmpty()) {
+        for (let error of (errors.array())) {
+            req.flash('alert', error.msg);
+        }
+        return res.redirect('back');
+    }
+    async.parallel({
+        story: function(callback) {
+            Story.findById(req.params.story_id, callback);
+        },
+        comment: function(callback) {
+            Comment.findById(req.params.comment_id, (callback));
+        }
+    }, function(err, results) {
+        if (err) {
+            return next(err);
+        } else if (!results.comment) {
+            let err = new Error('Comment not found');
+            err.statusCode = 404;
+            return next(err);
+        } else if (!results.story) {
+            let err = new Error('Story not found');
+            err.statusCode = 404;
+            return next(err);
+        }
+        replaceComment(req.user.comments, comment);
+        replaceComment(story.comments, comment);
+        comment.save();
+    });
+}
+
+function replaceComment(collection, comment) {
+    collection.id(comment._id).remove();
+    collection.push(comment);
+    collection.save();
+}
+
+module.exports.update = [commentValidation, updateComment];
+
