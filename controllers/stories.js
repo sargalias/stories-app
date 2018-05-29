@@ -62,7 +62,10 @@ function createStory(req, res, next) {
 module.exports.create = [storyValidation, createStory];
 
 module.exports.show = (req, res, next) => {
-    Story.findById(req.params.story_id, (err, story) => {
+    Story
+        .findById(req.params.story_id)
+        .populate('comments.author')
+        .exec((err, story) => {
         if (err) {
             return next(err);
         } else if (!story) {
