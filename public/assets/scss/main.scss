@@ -81,6 +81,7 @@ footer {
           "av md"
           "av ct";
   grid-template-columns: 100px 1fr;
+  grid-gap: 1rem;
   .avatar {
     width: 100px;
     height: 100px;

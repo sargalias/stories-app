@@ -27,23 +27,39 @@
           </div>
               <!--Comments-->
               <% if (story.allowComments) { %>
+                  <div class="reply">
+                      <% if (user) { %>
+                          <div class="">
+                              <h3>Leave a comment</h3>
+                              <form action="">
+                                  <textarea name="commentInput" id="commentInput"></textarea>
+                                  <button type="submit" class="button primary">Submit</button>
+                              </form>
+                          </div>
+                      <% } else { %>
+                          <div>
+                              <p>You must <a href="/auth/google">sign in with google</a> to reply.</p>
+                          </div>
+                      <% } %>
+                  </div>
                   <div class="comments">
                       <h3>Comments</h3>
                       <% for (let comment of story.comments) { %>
-                        <div class="comment">
+                        <div class="comment callout secondary">
                             <div class="avatar">
                                 <img src="<%= comment.author.image %>" alt="">
                             </div>
                             <div class="metadata">
-                                Posted on <%= viewHelpers.formatDate(comment.date); %>
+                                Posted on <%= viewHelpers.formatDate(comment.date); %> by <%= comment.author.name %>
                             </div>
                             <div class="content">
                                 <div>
                                     <%= comment.body %>
                                 </div>
+                                <p>Buttons not completed</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, distinctio dolor expedita id illum incidunt, modi obcaecati perspiciatis porro, quis recusandae reprehenderit saepe veritatis. Itaque odit provident quam soluta! Fugiat?</p>
                                 <% if (user && user.id === comment.authorId) { %>
                                     <div class="button-container">
-                                        <!--Buttons not completed-->
                                         <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
                                         <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
                                             <button class="button alert">Delete</button>

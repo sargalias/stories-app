@@ -54,7 +54,8 @@ footer {
 .comment {
   display: grid;
   grid-template-areas: "av md" "av ct";
-  grid-template-columns: 100px 1fr; }
+  grid-template-columns: 100px 1fr;
+  grid-gap: 1rem; }
   .comment .avatar {
     width: 100px;
     height: 100px;
