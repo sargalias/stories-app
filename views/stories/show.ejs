@@ -58,19 +58,22 @@
                                 Posted on <%= viewHelpers.formatDate(comment.date); %> by <%= comment.author.name %>
                             </div>
                             <div class="content">
-                                <div>
+                                <div data-comment-id="<%= comment.id %>">
                                     <%- comment.body %>
                                 </div>
-                                <p>Buttons not completed</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, distinctio dolor expedita id illum incidunt, modi obcaecati perspiciatis porro, quis recusandae reprehenderit saepe veritatis. Itaque odit provident quam soluta! Fugiat?</p>
-                                <% if (user && user.id === comment.authorId) { %>
-                                    <div class="button-container">
-                                        <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
+                                <% //if (user && user.id === comment.author.id) { %>
+                                    <div class="button-container" data-comment-button-cont="<%= comment.id %>">
+                                        <button class="button warning" data-comment-edit="<%= comment.id %>">Edit</button>
                                         <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
                                             <button class="button alert">Delete</button>
                                         </form>
                                     </div>
-                                <% } %>
+                                    <div class="edit-container" data-edit-cont="<%= comment.id %>">
+                                        <textarea name="" id="" ><%= comment.body %></textarea>
+                                        <button type="submit" class="button warning" data-comment-submit="<%= comment.id %>">Submit</button>
+                                        <button class="button secondary" data-comment-cancel="<%= comment.id %>">Cancel</button>
+                                    </div>
+                                <% //} %>
                             </div>
                         </div>
                       <% } %>

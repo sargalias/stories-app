@@ -69,4 +69,7 @@ footer {
   .comment .content {
     grid-area: ct; }
 
+.display-none {
+  display: none; }
+
 /*# sourceMappingURL=main.css.map */
