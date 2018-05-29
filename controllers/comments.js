@@ -87,9 +87,10 @@ function updateComment(req, res, next) {
             err.statusCode = 404;
             return next(err);
         }
-        replaceComment(req.user.comments, comment);
-        replaceComment(story.comments, comment);
-        saveCollections(comment, story, req.user, req, res, next);
+        results.comment.body = commentData.commentText;
+        replaceComment(req.user.comments, results.comment);
+        replaceComment(results.story.comments, results.comment);
+        saveCollections(results.comment, results.story, req.user, req, res, next);
     });
 }
 
