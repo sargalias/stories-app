@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const cc = storiesController = require('../controllers/stories');
-const ah = authHelpers = require('../helpers/authentication')
+const cc = commentsController = require('../controllers/comments');
+const ah = authHelpers = require('../helpers/authentication');
 
-router.post('/stories/:story_id', ah.ensureLoggedIn, cc.create);
+router.post('/:story_id', cc.create);
 
 module.exports = router;;

@@ -1,5 +1,5 @@
 const Comment = require('../models/Comment');
-const {commentValidation} = require('../helpers/storyValidation');
+const {commentValidation} = require('../helpers/commentValidation');
 const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 
@@ -12,10 +12,11 @@ function createComment(req, res, next) {
         }
         return res.redirect('back');
     }
+    console.log(commentData);
     Comment.create({
         storyId: req.params.story_id,
         body: commentData.commentText,
-        author: req.user
+        author: req.user,
     }, (err, comment) => {
         if (err)
             return next(err);
