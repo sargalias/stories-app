@@ -50,11 +50,13 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const storiesRouter = require('./routes/stories');
+const commentsRouter = require('./routes/comments');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/stories', storiesRouter);
+app.use('/stories', commentsRouter);
 
 
 module.exports = app;
