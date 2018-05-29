@@ -25,7 +25,7 @@ module.exports = function(passport) {
                 }
                 else {
                     user.image = ph(profile);
-                    user.save(callback);
+                    user.save(done);
                 }
             });
         }
