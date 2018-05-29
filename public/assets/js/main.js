@@ -15,10 +15,16 @@ for (let btn of commentEditBtns) {
     btn.addEventListener('click', editComment);
 }
 
-const commentCancelEditBtns = document.querySelectorAll((['data-comment-cancel']));
+const commentCancelEditBtns = document.querySelectorAll('[data-comment-cancel]');
 for (let btn of commentCancelEditBtns) {
     btn.addEventListener('click', cancelEditComment);
 }
+
+const commentSubmitEditBtns = document.querySelectorAll('[data-comment-submit]');
+for (let btn of commentSubmitEditBtns) {
+    btn.addEventListener('click', submitEditComment);
+}
+
 
 // Get all edit buttons
 // Add an event listener to create a textarea.
@@ -34,7 +40,10 @@ function editComment(e) {
     const id = e.currentTarget.getAttribute('data-comment-edit');
     const btnCont = document.querySelector(`[data-comment-button-cont="${id}"]`);
     const editCont = document.querySelector(`[data-edit-cont="${id}"]`);
+    const commentText = document.querySelector(`[data-comment-id="${id}"]`);
 
+    // Hide the comment body
+    commentText.classList.add('display-none');
     // Hide button container
     btnCont.classList.add('display-none');
     // Unhide edit container
@@ -43,13 +52,19 @@ function editComment(e) {
 
 function cancelEditComment(e) {
     console.log('clicked');
-    const id = e.currentTarget.getAttribute('data-comment-edit');
+    const id = e.currentTarget.getAttribute('data-comment-cancel');
 
     const btnCont = document.querySelector(`[data-comment-button-cont="${id}"]`);
     const editCont = document.querySelector(`[data-edit-cont="${id}"]`);
+    const commentText = document.querySelector(`[data-comment-id="${id}"]`);
 
     // Hide button container
+    commentText.classList.remove('display-none');
     btnCont.classList.remove('display-none');
     // Unhide edit container
     editCont.classList.add('display-none');
+}
+
+function submitEditComment(e) {
+
 }
