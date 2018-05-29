@@ -1,6 +1,5 @@
 const Story = require('../models/Story');
 const User = require('../models/User');
-const Comment = require('../models/Comment');
 const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const async = require('async');
