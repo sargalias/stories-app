@@ -6,15 +6,44 @@ const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const async = require('async');
 
-function createComment(req, res, next) {
+function commentErrors(req, res, next) {
     const errors = validationResult(req);
-    const commentData = matchedData(req, {locations: ['body']});
     if (!errors.isEmpty()) {
         for (let error of (errors.array())) {
             req.flash('alert', error.msg);
         }
         return res.redirect('back');
+    } else {
+        return next();
     }
+}
+
+function replaceComment(collection, comment) {
+    collection.id(comment._id).remove();
+    collection.push(comment);
+}
+
+function saveCollections(comment, story, user, req, res, next) {
+    async.parallel([
+        function (callback) {
+            comment.save(callback);
+        },
+        function (callback) {
+            story.save(callback);
+        },
+        function(callback) {
+            req.user.save(callback);
+        }
+    ], function(err, results) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('back');
+    });
+}
+
+function createComment(req, res, next) {
+    const commentData = matchedData(req, {locations: ['body']});
     const comment = new Comment({
         storyId: req.params.story_id,
         body: commentData.commentText,
@@ -31,36 +60,14 @@ function createComment(req, res, next) {
             return next(err);
         }
         story.comments.push(comment);
-        async.parallel([
-            function (callback) {
-                story.save(callback);
-            },
-            function (callback) {
-                comment.save(callback);
-            },
-            function(callback) {
-                req.user.save(callback);
-            }
-        ], function(err, results) {
-            if (err) {
-                return next(err);
-            }
-            res.redirect('back');
-        });
+        saveCollections(comment, story, req.user, req, res, next);
     });
 }
 
-module.exports.create = [commentValidation, createComment];
+module.exports.create = [commentValidation, commentErrors, createComment];
 
 function updateComment(req, res, next) {
-    const errors = validationResult(req);
     const commentData = matchedData(req, {locations: ['body']});
-    if (!errors.isEmpty()) {
-        for (let error of (errors.array())) {
-            req.flash('alert', error.msg);
-        }
-        return res.redirect('back');
-    }
     async.parallel({
         story: function(callback) {
             Story.findById(req.params.story_id, callback);
@@ -82,15 +89,9 @@ function updateComment(req, res, next) {
         }
         replaceComment(req.user.comments, comment);
         replaceComment(story.comments, comment);
-        comment.save();
+        saveCollections(comment, story, req.user, req, res, next);
     });
 }
 
-function replaceComment(collection, comment) {
-    collection.id(comment._id).remove();
-    collection.push(comment);
-    collection.save();
-}
-
-module.exports.update = [commentValidation, updateComment];
+module.exports.update = [commentValidation, commentErrors, updateComment];
 
