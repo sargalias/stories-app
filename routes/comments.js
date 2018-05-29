@@ -7,4 +7,4 @@ router.post('/:story_id', cc.create);
 
 router.put('/:story_id/:comment_id', cc.update);
 
-module.exports = router;;
+module.exports = router;
