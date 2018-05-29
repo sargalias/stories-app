@@ -32,12 +32,25 @@
                       <% for (let comment of story.comments) { %>
                         <div class="comment">
                             <div class="avatar">
-
+                                <img src="<%= comment.author.image %>" alt="">
                             </div>
                             <div class="metadata">
                                 Posted on <%= viewHelpers.formatDate(comment.date); %>
                             </div>
-                            <div class="content"><%= comment.body %></div>
+                            <div class="content">
+                                <div>
+                                    <%= comment.body %>
+                                </div>
+                                <% if (user && user.id === comment.authorId) { %>
+                                    <div class="button-container">
+                                        <!--Buttons not completed-->
+                                        <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
+                                        <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
+                                            <button class="button alert">Delete</button>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
                         </div>
                       <% } %>
 

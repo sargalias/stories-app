@@ -5,7 +5,7 @@ const Story = require('./Story');
 const userSchema = new mongoose.Schema({
     googleId: {type: String, required: true, unique: true},
     name: {type: String, required: true},
-    comments: [Comment.schema],
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
     stories: [Story.schema],
     image: {type: String, required: true}
 });

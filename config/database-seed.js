@@ -68,7 +68,7 @@ db.dropDatabase((err) => {
                 let newStory = createStory(user.id, user.name, 'Title: 11', "<p>Bob is awesome.</p><p>Bob is indeed awesome. <strong>Bolded stuff</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur consectetur corporis culpa, cum dicta dolor dolore doloremque eius est fuga in iste, magni natus non, porro temporibus voluptatum. Quia.",);
                 Story.create(newStory, (err, story) => {
                     Comment.create({
-                        authorId: user.id,
+                        author: user,
                         storyId: story.id,
                         body: 'First comment test yo.',
                     }, (err, comment) => {
@@ -79,7 +79,7 @@ db.dropDatabase((err) => {
                         user.save();
                     });
                     Comment.create({
-                        authorId: user.id,
+                        author: user,
                         storyId: story.id,
                         body: 'Second comment test yo.',
                     }, (err, comment) => {
@@ -134,7 +134,7 @@ db.dropDatabase((err) => {
                 let newStory = createStory(user.id, user.name, 'Title: 12', "<p>Bob is awesome.</p><p>Bob is indeed awesome. <strong>Bolded stuff</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur consectetur corporis culpa, cum dicta dolor dolore doloremque eius est fuga in iste, magni natus non, porro temporibus voluptatum. Quia.",);
                 Story.create(newStory, (err, story) => {
                     Comment.create({
-                        authorId: user.id,
+                        author: user,
                         storyId: story.id,
                         body: 'Third comment test yo.',
                     }, (err, comment) => {
@@ -145,7 +145,7 @@ db.dropDatabase((err) => {
                         user.save();
                     });
                     Comment.create({
-                        authorId: user.id,
+                        author: user,
                         storyId: story.id,
                         body: 'Fourth comment test yo.',
                     }, (err, comment) => {
