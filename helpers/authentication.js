@@ -1,4 +1,5 @@
 const Story = require('../models/Story');
+const Comment = require('../models/Comment');
 
 
 function isLoggedIn(req, res, next) {
@@ -53,4 +54,25 @@ module.exports.ensureUserHasAccess = (req, res, next) => {
             }
         });
     }
+};
+
+module.exports.ensureUserOwnsComment = (req, res, next) => {
+    Comment
+        .findById(req.params.comment_id)
+        .populate('user')
+        .exec((err, comment) => {
+        if (err) {
+            return next();
+        }
+        else if (!comment) {
+            let err = new Error('Comment not found');
+            err.statusCode = 404;
+            return next(err);
+        } else if (!comment.author._id.equals(req.user.id)) {
+            req.flash('alert', 'Not authorized');
+            res.redirect(`/stories/${req.params.story_id}`);
+        } else {
+            next();
+        }
+    });
 };
