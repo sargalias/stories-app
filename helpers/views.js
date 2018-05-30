@@ -19,3 +19,12 @@ module.exports.trimBody = (body) => {
 module.exports.formatDate = (date) => {
     return moment(date).format('DD/MM/YYYY');
 };
+
+module.exports.userOwnsStory = (user, storyId) => {
+    for (let story of user.stories) {
+        if (story._id.equals(storyId)) {
+            return true;
+        }
+    }
+    return false;
+};

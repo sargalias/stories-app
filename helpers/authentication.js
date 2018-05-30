@@ -6,7 +6,7 @@ function isLoggedIn(req, res, next) {
     return req.user;
 }
 
-const userOwnsStory = (req, res, next) => {
+function userOwnsStory(req, res, next) {
     for (let story of req.user.stories) {
         if (story._id.equals(req.params.story_id)) {
             return true;
@@ -56,23 +56,51 @@ module.exports.ensureUserHasAccess = (req, res, next) => {
     }
 };
 
+function userOwnsComment(user, comment) {
+    return comment.author._id.equals(user.id);
+}
+
 module.exports.ensureUserOwnsComment = (req, res, next) => {
     Comment
         .findById(req.params.comment_id)
-        .populate('user')
+        .populate('author')
         .exec((err, comment) => {
-        if (err) {
-            return next();
-        }
-        else if (!comment) {
-            let err = new Error('Comment not found');
-            err.statusCode = 404;
-            return next(err);
-        } else if (!comment.author._id.equals(req.user.id)) {
-            req.flash('alert', 'Not authorized');
-            res.redirect(`/stories/${req.params.story_id}`);
-        } else {
-            next();
-        }
-    });
+            if (err) {
+                return next();
+            }
+            else if (!comment) {
+                let err = new Error('Comment not found');
+                err.statusCode = 404;
+                return next(err);
+            } else if (userOwnsComment(req.user, comment)) {
+                next();
+            } else {
+                req.flash('alert', 'Not authorized');
+                res.redirect(`/stories/${req.params.story_id}`);
+            }
+        });
 };
+
+module.exports.ensureUserOwnsCommentOrStory = (req, res, next) => {
+    Comment
+        .findById(req.params.comment_id)
+        .populate('author')
+        .exec((err, comment) => {
+            if (err) {
+                return next();
+            }
+            else if (!comment) {
+                let err = new Error('Comment not found');
+                err.statusCode = 404;
+                return next(err);
+            } else if (userOwnsStory(req, res, next)) {
+                next();
+            } else if (userOwnsComment(req.user, comment)) {
+                next();
+            } else {
+                req.flash('alert', 'Not authorized');
+                res.redirect(`/stories/${req.params.story_id}`);
+            }
+        });
+};
+
