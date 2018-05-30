@@ -63,17 +63,17 @@
                                 </div>
                                 <% //if (user && user.id === comment.author.id) { %>
                                     <div class="button-container" data-comment-button-cont="<%= comment.id %>">
-                                        <button class="button warning" data-comment-edit="<%= comment.id %>">Edit</button>
+                                        <button class="button warning" data-comment-edit-btn="<%= comment.id %>">Edit</button>
                                         <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
                                             <button class="button alert">Delete</button>
                                         </form>
                                     </div>
                                     <noscript>Please enable JavaScript to edit and delete your comments</noscript>
-                                    <div class="edit-container display-none" data-comment-edit-cont="<%= comment.id %>">
+                                    <div class="edit-container display-none" data-comment-edit-form-cont="<%= comment.id %>">
                                         <form action="/stories/<%= story.id %>/comments/<%= comment.id %>?_method=PUT">
                                             <textarea name="commentText" data-comment-input="<%= comment.id %>"><%- comment.body %></textarea>
-                                            <button type="submit" class="button warning" data-comment-submit="<%= comment.id %>">Submit</button>
-                                            <button type="button" class="button secondary" data-comment-cancel="<%= comment.id %>">Cancel</button>
+                                            <button type="submit" class="button warning" data-comment-submit-btn="<%= comment.id %>">Submit</button>
+                                            <button type="button" class="button secondary" data-comment-cancel-btn="<%= comment.id %>">Cancel</button>
                                         </form>
                                     </div>
                                 <% //} %>
