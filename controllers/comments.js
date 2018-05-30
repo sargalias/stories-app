@@ -24,7 +24,7 @@ function createComment(req, res, next) {
             return next(err);
         }
         story.comments.push(comment);
-        cch.saveCollections([comment, story, req.user], req, res, next);
+        cch.saveCollectionsAndRedirect([comment, story, req.user], 'back', req, res, next);
     });
 }
 
@@ -57,7 +57,7 @@ function updateComment(req, res, next) {
         // Update comment with new body
         cch.updateCommentWithNewCommentBody(updatedComment, commentData.commentText);
         cch.updateCommentsArrayWithUpdatedComment(story.comments, updatedComment);
-        cch.saveCollections([updatedComment, story], req, res, next);
+        cch.saveCollectionsAndRedirect([updatedComment, story], 'back', req, res, next);
     });
 }
 

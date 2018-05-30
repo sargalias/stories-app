@@ -1,4 +1,5 @@
 const async = require('async');
+const {validationResult} = require('express-validator/check');
 
 function handleCommentErrors(req, res, next) {
     const errors = validationResult(req);
@@ -30,10 +31,10 @@ function saveCollection(collection) {
     }
 }
 
-function saveCollections(collections, req, res, next) {
+function saveCollectionsAndRedirect(collections, redirectRoute, req, res, next) {
     let asyncFunctionsArray = [];
     collections.forEach((collection) => {
-        asyncFunctionsArray.push(cch.saveCollection(collection));
+        asyncFunctionsArray.push(saveCollection(collection));
     });
     async.parallel(
         asyncFunctionsArray,
@@ -41,7 +42,7 @@ function saveCollections(collections, req, res, next) {
             if (err) {
                 return next(err);
             }
-            res.redirect('back');
+            res.redirect(redirectRoute);
         }
     );
 }
@@ -55,7 +56,6 @@ module.exports = {
     handleCommentErrors,
     updateCommentsArrayWithUpdatedComment,
     updateCommentWithNewCommentBody,
-    saveCollection,
-    saveCollections,
+    saveCollectionsAndRedirect,
     removeCommentReferenceFromArr,
 };
