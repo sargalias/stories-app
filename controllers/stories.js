@@ -1,5 +1,6 @@
 const Story = require('../models/Story');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const async = require('async');
@@ -15,7 +16,6 @@ module.exports.index = (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            console.log(stories);
             res.render('stories/index', {stories: stories});
         });
 };
@@ -139,19 +139,25 @@ module.exports.delete = (req, res, next) => {
         storyDelete: function(callback) {
             Story.findByIdAndRemove(req.params.story_id, callback);
         },
-        // commentsDelete: function(callback) {
-        //     Comment.deleteMany({storyId: req.params.story_id}, callback);
-        // },
+        commentsDelete: function(callback) {
+            Comment.deleteMany({storyId: req.params.story_id}, callback);
+        },
         userDelete: function(callback) {
-            User.findByIdAndUpdate(req.user.id, {
-                $pull: {stories: {_id: ObjectId(req.params.story_id)}}
-            }, callback);
+            User.findByIdAndUpdate(req.user.id,
+                    {$pull: {stories: {_id: ObjectId(req.params.story_id)}}})
+                .populate('comments')
+                .exec((err, user) => {
+                    user.comments = user.comments.filter((comment) => {
+                        return comment.storyId !== req.params.story_id;
+                    });
+                    user.save(callback);
+                });
         }
     }, function(err, results) {
         if (err) {
             return next(err);
         }
-        res.redirect('success', 'Story deleted');
+        req.flash('success', 'Story deleted');
         return res.redirect('/stories');
     });
 };
