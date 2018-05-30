@@ -70,7 +70,7 @@
                                     </div>
                                     <noscript>Please enable JavaScript to edit and delete your comments</noscript>
                                     <div class="edit-container display-none" data-comment-edit-form-cont="<%= comment.id %>">
-                                        <form action="/stories/<%= story.id %>/comments/<%= comment.id %>?_method=PUT">
+                                        <form action="/stories/<%= story.id %>/comments/<%= comment.id %>?_method=PUT" method="POST">
                                             <textarea name="commentText" data-comment-input="<%= comment.id %>"><%- comment.body %></textarea>
                                             <button type="submit" class="button warning" data-comment-submit-btn="<%= comment.id %>">Submit</button>
                                             <button type="button" class="button secondary" data-comment-cancel-btn="<%= comment.id %>">Cancel</button>

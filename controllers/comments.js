@@ -18,28 +18,31 @@ function commentErrors(req, res, next) {
     }
 }
 
-function replaceComment(collection, comment) {
-    collection.id(comment._id).remove();
-    collection.push(comment);
+function replaceCommentSubdoc(subdocArray, updatedComment) {
+    subdocArray.id(updatedComment._id).remove();
+    subdocArray.push(updatedComment);
 }
 
-function saveCollections(comment, story, user, req, res, next) {
-    async.parallel([
-        function (callback) {
-            comment.save(callback);
-        },
-        function (callback) {
-            story.save(callback);
-        },
-        function(callback) {
-            req.user.save(callback);
-        }
-    ], function(err, results) {
-        if (err) {
-            return next(err);
-        }
-        res.redirect('back');
+function saveCollection(collection) {
+    return function (cb) {
+        collection.save(cb);
+    }
+}
+
+function saveCollections(collections, req, res, next) {
+    let asyncFunctionsArray = [];
+    collections.forEach((collection) => {
+        asyncFunctionsArray.push(saveCollection(collection));
     });
+    async.parallel(
+        asyncFunctionsArray,
+        function(err, results) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('back');
+        }
+    );
 }
 
 function createComment(req, res, next) {
@@ -60,7 +63,7 @@ function createComment(req, res, next) {
             return next(err);
         }
         story.comments.push(comment);
-        saveCollections(comment, story, req.user, req, res, next);
+        saveCollections([comment, story, req.user], req, res, next);
     });
 }
 
@@ -74,23 +77,25 @@ function updateComment(req, res, next) {
         },
         comment: function(callback) {
             Comment.findById(req.params.comment_id, (callback));
-        }
+        },
     }, function(err, results) {
+        let updatedComment = results.comment;
+        let story = results.story;
         if (err) {
             return next(err);
-        } else if (!results.comment) {
+        } else if (!updatedComment) {
             let err = new Error('Comment not found');
             err.statusCode = 404;
             return next(err);
-        } else if (!results.story) {
+        } else if (!story) {
             let err = new Error('Story not found');
             err.statusCode = 404;
             return next(err);
         }
-        results.comment.body = commentData.commentText;
-        replaceComment(req.user.comments, results.comment);
-        replaceComment(results.story.comments, results.comment);
-        saveCollections(results.comment, results.story, req.user, req, res, next);
+        // Update comment with new body
+        updatedComment.body = commentData.commentText;
+        replaceCommentSubdoc(story.comments, updatedComment);
+        saveCollections([updatedComment, story], req, res, next);
     });
 }
 
