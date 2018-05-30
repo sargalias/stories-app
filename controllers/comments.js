@@ -1,6 +1,5 @@
 const Comment = require('../models/Comment');
 const Story = require('../models/Story');
-const User = require('../models/User');
 const {commentValidation} = require('../helpers/commentValidation');
 const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
