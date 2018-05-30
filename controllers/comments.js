@@ -18,9 +18,16 @@ function commentErrors(req, res, next) {
     }
 }
 
-function replaceCommentSubdoc(subdocArray, updatedComment) {
-    subdocArray.id(updatedComment._id).remove();
-    subdocArray.push(updatedComment);
+function updateCommentsArray(subdocArray, updatedComment) {
+    for (let i=0; i<subdocArray.length; i++) {
+        if (subdocArray[i]._id.equals(updatedComment.id)) {
+            updateCommentWithNewCommentBody(subdocArray[i], updatedComment.body);
+        }
+    }
+}
+
+function updateCommentWithNewCommentBody(comment, newCommentBody) {
+    comment.body = newCommentBody;
 }
 
 function saveCollection(collection) {
@@ -93,8 +100,9 @@ function updateComment(req, res, next) {
             return next(err);
         }
         // Update comment with new body
-        updatedComment.body = commentData.commentText;
-        replaceCommentSubdoc(story.comments, updatedComment);
+
+        updateCommentWithNewCommentBody(updatedComment, commentData.commentText);
+        updateCommentsArray(story.comments, updatedComment);
         saveCollections([updatedComment, story], req, res, next);
     });
 }
