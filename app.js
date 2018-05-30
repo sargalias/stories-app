@@ -14,6 +14,14 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Helmet (HTTP headers for security)
+const helmet = require('helmet');
+app.use(helmet());
+
+// Compression
+const compression = require('compression');
+app.use(compression());
+
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -65,6 +73,5 @@ app.get('*', (req, res, next) => {
 app.use((err, req, res, next) => {
     res.render('error', {err: err});
 });
-
 
 module.exports = app;
