@@ -68,10 +68,13 @@
                                             <button class="button alert">Delete</button>
                                         </form>
                                     </div>
-                                    <div class="edit-container display-none" data-edit-cont="<%= comment.id %>">
-                                        <textarea name="" id="" ><%- comment.body %></textarea>
-                                        <button type="submit" class="button warning" data-comment-submit="<%= comment.id %>">Submit</button>
-                                        <button class="button secondary" data-comment-cancel="<%= comment.id %>">Cancel</button>
+                                    <noscript>Please enable JavaScript to edit and delete your comments</noscript>
+                                    <div class="edit-container display-none" data-comment-edit-cont="<%= comment.id %>">
+                                        <form action="/stories/<%= story.id %>/comments/<%= comment.id %>?_method=PUT">
+                                            <textarea name="commentText" data-comment-input="<%= comment.id %>"><%- comment.body %></textarea>
+                                            <button type="submit" class="button warning" data-comment-submit="<%= comment.id %>">Submit</button>
+                                            <button type="button" class="button secondary" data-comment-cancel="<%= comment.id %>">Cancel</button>
+                                        </form>
                                     </div>
                                 <% //} %>
                             </div>

@@ -36,11 +36,11 @@ for (let btn of commentSubmitEditBtns) {
 
 function editComment(e) {
     // hide the button container
-    console.log('clicked');
     const id = e.currentTarget.getAttribute('data-comment-edit');
     const btnCont = document.querySelector(`[data-comment-button-cont="${id}"]`);
-    const editCont = document.querySelector(`[data-edit-cont="${id}"]`);
+    const editCont = document.querySelector(`[data-comment-edit-cont="${id}"]`);
     const commentText = document.querySelector(`[data-comment-id="${id}"]`);
+
 
     // Hide the comment body
     commentText.classList.add('display-none');
@@ -48,6 +48,10 @@ function editComment(e) {
     btnCont.classList.add('display-none');
     // Unhide edit container
     editCont.classList.remove('display-none');
+
+    // Give textarea correct body
+    const commentInput = document.querySelector(`[data-comment-input="${id}"]`);
+    commentInput.value = commentText.textContent.trim();
 }
 
 function cancelEditComment(e) {
@@ -55,7 +59,7 @@ function cancelEditComment(e) {
     const id = e.currentTarget.getAttribute('data-comment-cancel');
 
     const btnCont = document.querySelector(`[data-comment-button-cont="${id}"]`);
-    const editCont = document.querySelector(`[data-edit-cont="${id}"]`);
+    const editCont = document.querySelector(`[data-comment-edit-cont="${id}"]`);
     const commentText = document.querySelector(`[data-comment-id="${id}"]`);
 
     // Hide button container
