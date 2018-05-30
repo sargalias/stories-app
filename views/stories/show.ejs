@@ -62,7 +62,7 @@
                                 <div data-comment-id="<%= comment.id %>">
                                     <%- comment.body %>
                                 </div>
-                                <% //if (user && user.id === comment.author.id) { %>
+                                <% if (user && user.id === comment.author.id) { %>
                                     <div class="button-container" data-comment-button-cont="<%= comment.id %>">
                                         <button class="button warning" data-comment-edit-btn="<%= comment.id %>">Edit</button>
                                         <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
@@ -77,7 +77,7 @@
                                             <button type="button" class="button secondary" data-comment-cancel-btn="<%= comment.id %>">Cancel</button>
                                         </form>
                                     </div>
-                                <% //} %>
+                                <% } %>
                             </div>
                         </div>
                       <% } %>
