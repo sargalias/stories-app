@@ -57,6 +57,14 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/stories', storiesRouter);
 app.use('/stories', commentsRouter);
+app.get('*', (req, res, next) => {
+    let err = new Error('Page not found');
+    err.statusCode = 404;
+    return next(err);
+});
+app.use((err, req, res, next) => {
+    res.render('error', {err: err});
+});
 
 
 module.exports = app;

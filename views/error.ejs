@@ -1,0 +1,21 @@
+<%- include('./partials/header'); %>
+
+<div class="grid-container">
+    <div class="callout primary">
+        <h1>Error <%= err.statusCode %> - <%= err.message %></h1>
+        <% if (err.statusCode === 404) { %>
+            <p>The page you requested could not be found. Please click one of the buttons below to view the website, or try another link.</p>
+        <% } %>
+        <div class="button-container">
+            <a href="/" class="button primary">Home</a>
+            <a href="/stories" class="button primary">View Stories</a>
+            <% if (user !== null) { %>
+            <a href="/users/dashboard" class="button primary">Dashboard</a>
+            <% } else { %>
+            <%- include('./partials/google-login-button'); %>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer'); %>
