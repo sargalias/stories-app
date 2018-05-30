@@ -66,9 +66,22 @@ function commentEditHandler() {
     }
 }
 
+function commentDeleteWarning() {
+    const commentDeleteBtns = document.querySelectorAll('[data-comment-delete]');
+    for (let btn of commentDeleteBtns) {
+        btn.addEventListener('click', deleteCommentHandler);
+    }
+
+    function deleteCommentHandler(e) {
+        if (!confirm("Are you sure you want to delete this comment?"))
+            e.preventDefault();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', main, false);
 
 function main() {
     storyHandler();
     commentEditHandler();
+    commentDeleteWarning();
 }

@@ -108,3 +108,6 @@ function updateComment(req, res, next) {
 
 module.exports.update = [commentValidation, commentErrors, updateComment];
 
+module.exports.delete = (req, res, next) => {
+    res.send('Reached comment delete route');
+};

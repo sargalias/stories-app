@@ -7,4 +7,7 @@ router.post('/:story_id', cc.create);
 
 router.put('/:story_id/comments/:comment_id', ah.ensureLoggedIn, ah.ensureUserOwnsComment, cc.update);
 
+
+router.delete('/:story_id/comments/:comment_id', ah.ensureLoggedIn, ah.ensureUserOwnsComment, cc.delete);
+
 module.exports = router;
