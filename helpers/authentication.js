@@ -104,3 +104,19 @@ module.exports.ensureUserOwnsCommentOrStory = (req, res, next) => {
         });
 };
 
+module.exports.ensureStoryAllowsComments = (req, res, next) => {
+    Story.findById(req.params.story_id, (err, story) => {
+        if (err) {
+            return next(err);
+        } else if (!story) {
+            let err = new Error('Story not found');
+            err.statusCode = 404;
+            return next(err);
+        } else if (!story.allowComments) {
+            req.flash('alert', 'Not authorized. This story does not allow comments.');
+            res.redirect(`/stories/${req.params.story_id}`);
+        } else {
+            next();
+        }
+    });
+};
