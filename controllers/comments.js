@@ -1,61 +1,10 @@
 const Comment = require('../models/Comment');
 const Story = require('../models/Story');
 const {commentValidation} = require('../helpers/commentValidation');
-const {validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const async = require('async');
 const mongoose = require('mongoose');
-
-function handleCommentErrors(req, res, next) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        for (let error of (errors.array())) {
-            req.flash('alert', error.msg);
-        }
-        return res.redirect('back');
-    } else {
-        return next();
-    }
-}
-
-function updateCommentsArrayWithUpdatedComment(subdocArray, updatedComment) {
-    for (let i=0; i<subdocArray.length; i++) {
-        if (subdocArray[i]._id.equals(updatedComment.id)) {
-            updateCommentWithNewCommentBody(subdocArray[i], updatedComment.body);
-        }
-    }
-}
-
-function updateCommentWithNewCommentBody(comment, newCommentBody) {
-    comment.body = newCommentBody;
-}
-
-function saveCollection(collection) {
-    return function (cb) {
-        collection.save(cb);
-    }
-}
-
-function saveCollections(collections, req, res, next) {
-    let asyncFunctionsArray = [];
-    collections.forEach((collection) => {
-        asyncFunctionsArray.push(saveCollection(collection));
-    });
-    async.parallel(
-        asyncFunctionsArray,
-        function(err, results) {
-            if (err) {
-                return next(err);
-            }
-            res.redirect('back');
-        }
-    );
-}
-
-function removeCommentReferenceFromArr(arr, referenceId) {
-    let i = arr.indexOf(referenceId);
-    arr.splice(i, 1);
-}
+const cch = commentsControllerHelper = require('../helpers/commentsControllerHelper');
 
 function createComment(req, res, next) {
     const commentData = matchedData(req, {locations: ['body']});
@@ -75,11 +24,11 @@ function createComment(req, res, next) {
             return next(err);
         }
         story.comments.push(comment);
-        saveCollections([comment, story, req.user], req, res, next);
+        cch.saveCollections([comment, story, req.user], req, res, next);
     });
 }
 
-module.exports.create = [commentValidation, handleCommentErrors, createComment];
+module.exports.create = [commentValidation, cch.handleCommentErrors, createComment];
 
 function updateComment(req, res, next) {
     const commentData = matchedData(req, {locations: ['body']});
@@ -106,13 +55,13 @@ function updateComment(req, res, next) {
         }
 
         // Update comment with new body
-        updateCommentWithNewCommentBody(updatedComment, commentData.commentText);
-        updateCommentsArrayWithUpdatedComment(story.comments, updatedComment);
-        saveCollections([updatedComment, story], req, res, next);
+        cch.updateCommentWithNewCommentBody(updatedComment, commentData.commentText);
+        cch.updateCommentsArrayWithUpdatedComment(story.comments, updatedComment);
+        cch.saveCollections([updatedComment, story], req, res, next);
     });
 }
 
-module.exports.update = [commentValidation, handleCommentErrors, updateComment];
+module.exports.update = [commentValidation, cch.handleCommentErrors, updateComment];
 
 module.exports.delete = (req, res, next) => {
     async.parallel([
@@ -129,7 +78,7 @@ module.exports.delete = (req, res, next) => {
             });
         },
         function(callback) {
-            removeCommentReferenceFromArr(req.user.comments, req.params.comment_id);
+            cch.removeCommentReferenceFromArr(req.user.comments, req.params.comment_id);
             req.user.save(callback);
         }
     ], function(err, results) {
