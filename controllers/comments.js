@@ -98,8 +98,8 @@ function updateComment(req, res, next) {
             err.statusCode = 404;
             return next(err);
         }
-        // Update comment with new body
 
+        // Update comment with new body
         updateCommentWithNewCommentBody(updatedComment, commentData.commentText);
         updateCommentsArray(story.comments, updatedComment);
         saveCollections([updatedComment, story], req, res, next);

@@ -1,24 +1,55 @@
 $(document).foundation();
 
-function storyHandler() {
-    const storyDeleteBtns = document.querySelectorAll('[data-story-delete]');
-    for (let btn of storyDeleteBtns) {
-        btn.addEventListener('click', deleteStoryHandler);
-    }
 
-    function deleteStoryHandler(e) {
-        if (!confirm("Are you sure you want to delete this story?"))
-            e.preventDefault();
+// UTILITY
+function applyClass(nodes, className) {
+    for (let node of nodes) {
+        node.classList.add(className);
     }
 }
 
-function commentEditHandler() {
-    function applyEventListenerToNodes(nodes, eventType, func) {
-        for (let node of nodes) {
-            node.addEventListener(eventType, func);
-        }
+function removeClass(nodes, className) {
+    for (let node of nodes) {
+        node.classList.remove(className);
     }
+}
 
+function applyEventListenerToNodes(nodes, eventType, func) {
+    for (let node of nodes) {
+        node.addEventListener(eventType, func);
+    }
+}
+
+// STORY / COMMENT DELETE WARNINGS
+function deleteWarning(e, text) {
+    if (!confirm(text))
+        e.preventDefault();
+}
+
+function storyDeleteWarning(e) {
+    deleteWarning(e, "Are you sure you want to delete this story?");
+}
+
+
+function commentDeleteWarning(e) {
+    deleteWarning(e, "Are you sure you want to delete this comment?");
+}
+
+
+// SETUP
+function storyDeleteHandler() {
+    const storyDeleteBtns = document.querySelectorAll('[data-story-delete]');
+    applyEventListenerToNodes(storyDeleteBtns, 'click', storyDeleteWarning);
+}
+
+function commentDeleteHandler() {
+    const commentDeleteBtns = document.querySelectorAll('[data-comment-delete]');
+    applyEventListenerToNodes(commentDeleteBtns, 'click', commentDeleteWarning);
+}
+
+
+
+function commentEditHandler() {
     const commentEditBtns = document.querySelectorAll('[data-comment-edit-btn]');
     applyEventListenerToNodes(commentEditBtns, 'click', editComment);
 
@@ -33,19 +64,6 @@ function commentEditHandler() {
             commentInput: document.querySelector(`[data-comment-input="${id}"]`)
         }
     }
-
-    function applyClass(nodes, className) {
-        for (let node of nodes) {
-            node.classList.add(className);
-        }
-    }
-
-    function removeClass(nodes, className) {
-        for (let node of nodes) {
-            node.classList.remove(className);
-        }
-    }
-
     function editComment(e) {
         const id = e.currentTarget.getAttribute('data-comment-edit-btn');
         const {btnCont, editCont, commentText, commentInput} = getRelevantCommentNodes(id);
@@ -66,22 +84,11 @@ function commentEditHandler() {
     }
 }
 
-function commentDeleteWarning() {
-    const commentDeleteBtns = document.querySelectorAll('[data-comment-delete]');
-    for (let btn of commentDeleteBtns) {
-        btn.addEventListener('click', deleteCommentHandler);
-    }
-
-    function deleteCommentHandler(e) {
-        if (!confirm("Are you sure you want to delete this comment?"))
-            e.preventDefault();
-    }
-}
 
 document.addEventListener('DOMContentLoaded', main, false);
 
 function main() {
-    storyHandler();
+    storyDeleteHandler();
     commentEditHandler();
-    commentDeleteWarning();
+    commentDeleteHandler();
 }
