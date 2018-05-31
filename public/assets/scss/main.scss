@@ -1,3 +1,11 @@
+$bp: 1000px;
+$color-primary: #E9F4F9;
+$color-footer: #E5EBEE;
+$color-navbar: #E5EBEE;
+
+$color-bold: #ddd;
+
+
 // Sticky footer start
 html {
   height: 100%;
@@ -10,7 +18,17 @@ body {
 }
 // Sticky footer end
 
+header {
+  background-color: $color-navbar;
+  margin-bottom: 3rem;
+}
+
+
 .top-bar {
+  background-color: $color-navbar !important;
+  ul {
+    background-color: $color-navbar !important;
+  }
   .menu {
     align-items: center;
     &.left {
@@ -50,20 +68,12 @@ body {
 
 footer {
   padding: 2rem 0;
-  background-color: #e6e6e6;
+  background-color: $color-footer;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  margin-top: 3rem;
   p {
-    margin-bottom: 0;
-  }
-}
-
-.body {
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 1rem;
-  margin-bottom: 1rem;
-  > *:last-child {
     margin-bottom: 0;
   }
 }
@@ -102,4 +112,57 @@ footer {
 
 .display-none {
   display: none;
+}
+
+.center-bp {
+  @media screen and (min-width: $bp) {
+    text-align: center;
+  }
+}
+.stories.index {
+  @media screen and (min-width: $bp) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 3rem;
+    .story {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.callout.primary {
+  background-color: $color-primary !important;
+  &.story {
+    .body {
+      background-color: darken($color-primary, 5) !important;
+    }
+    &:hover {
+      background-color: darken($color-primary, 5) !important;
+      .body {
+        background-color: darken($color-primary, 10) !important;
+      }
+    }
+  }
+}
+
+.body {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+form > * {
+  label {
+    //font-size: 1.2rem;
+  }
+  .button {
+    margin-top: 1rem;
+  }
 }

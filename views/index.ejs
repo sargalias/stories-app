@@ -1,12 +1,18 @@
 <%- include('./partials/header'); %>
 
-<div class="callout primary">
-    <div class="grid-container">
+<div class="grid-container welcome">
+    <div class="callout primary">
     <h1>Welcome</h1>
-    <p>On this site you can write ideas for stories.</p>
-    <p>The ideas can be public so everyone can view them, private so they're only visible to you, or unlisted so only people with the link can view them.</p>
+    <p>On this site you can write down story ideas.</p>
+    <p>Idea status:</p>
+        <ul>
+            <li>Public ideas can be seen by anyone</li>
+            <li>Private ideas can only be seen by the author</li>
+            <li>unlisted ideas can only be seen by those who have the link</li>
+        </ul>
+    <p>Anyone can comment, unless you disable comments for your story ideas.</p>
     <div class="button-container">
-      <a href="/stories" class="button primary">View Stories</a>
+      <a href="/stories" class="button primary">Stories</a>
         <% if (user !== null) { %>
             <a href="/users/dashboard" class="button primary">Dashboard</a>
         <% } else { %>

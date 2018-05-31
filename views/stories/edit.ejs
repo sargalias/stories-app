@@ -2,11 +2,11 @@
 
 <div class="grid-container">
     <% if (story.privacy === 'PRIVATE') { %>
-        <div class="story callout alert" id="story-form-cont">
+        <div class="callout alert" id="story-form-cont">
     <% } else if (story.privacy === 'UNLISTED') { %>
-        <div class="story callout warning" id="story-form-cont">
+        <div class="callout warning" id="story-form-cont">
     <% } else { %>
-        <div class="story callout primary" id="story-form-cont">
+        <div class="callout primary" id="story-form-cont">
     <% } %>
         <h1>Edit Story</h1>
         <form action="/stories/<%= story.id %>?_method=PUT" method="POST">

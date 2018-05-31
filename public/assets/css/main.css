@@ -6,15 +6,23 @@ body {
   min-height: 100%;
   grid-template-rows: 1fr auto; }
 
-.top-bar .menu {
-  align-items: center; }
-  @media screen and (max-width: 639px) {
-    .top-bar .menu.left {
-      display: none; } }
-.top-bar .button-google {
-  padding: 0; }
-  .top-bar .button-google img {
-    max-width: 140px; }
+header {
+  background-color: #E5EBEE;
+  margin-bottom: 3rem; }
+
+.top-bar {
+  background-color: #E5EBEE !important; }
+  .top-bar ul {
+    background-color: #E5EBEE !important; }
+  .top-bar .menu {
+    align-items: center; }
+    @media screen and (max-width: 639px) {
+      .top-bar .menu.left {
+        display: none; } }
+  .top-bar .button-google {
+    padding: 0; }
+    .top-bar .button-google img {
+      max-width: 140px; }
 
 .button-google img {
   max-width: 200px; }
@@ -32,18 +40,12 @@ body {
 
 footer {
   padding: 2rem 0;
-  background-color: #e6e6e6;
+  background-color: #E5EBEE;
   display: flex;
   align-items: center;
-  justify-content: space-evenly; }
+  justify-content: space-evenly;
+  margin-top: 3rem; }
   footer p {
-    margin-bottom: 0; }
-
-.body {
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 1rem;
-  margin-bottom: 1rem; }
-  .body > *:last-child {
     margin-bottom: 0; }
 
 .flex {
@@ -71,5 +73,40 @@ footer {
 
 .display-none {
   display: none; }
+
+@media screen and (min-width: 1000px) {
+  .center-bp {
+    text-align: center; } }
+
+@media screen and (min-width: 1000px) {
+  .stories.index {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 3rem; }
+    .stories.index .story {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-bottom: 0; } }
+
+.callout.primary {
+  background-color: #E9F4F9 !important; }
+  .callout.primary.story .body {
+    background-color: #d5eaf4 !important; }
+  .callout.primary.story:hover {
+    background-color: #d5eaf4 !important; }
+    .callout.primary.story:hover .body {
+      background-color: #c1e0ee !important; }
+
+.body {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  margin-bottom: 1rem; }
+  .body > *:last-child {
+    margin-bottom: 0; }
+
+form > * .button {
+  margin-top: 1rem; }
 
 /*# sourceMappingURL=main.css.map */
