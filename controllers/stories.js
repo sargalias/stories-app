@@ -34,6 +34,7 @@ function createStory(req, res, next) {
     storyData.allowComments = storyData.allowComments === 'true';
     storyData.authorId = req.user.id;
     storyData.authorName = req.user.name;
+    storyData.authorImage = req.user.image;
     let newStory = new Story(storyData);
     async.parallel({
         storySave: function(cb) {

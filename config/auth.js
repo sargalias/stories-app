@@ -1,5 +1,6 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../models/User');
+const Story = require('../models/Story');
 const ph = profileHelper = require('../helpers/userProfile');
 
 module.exports = function(passport) {
@@ -23,7 +24,14 @@ module.exports = function(passport) {
                     });
                 }
                 else {
-                    user.image = ph(profile);
+                    // Update user image if changed.
+                    let newImg = ph(profile);
+                    if (newImg !== user.image) {
+                        user.image = newImg;
+                        Story.find({authorId: user.id}, (err, story) => {
+                            story.authorImage = user.image;
+                        });
+                    }
                     user.save(done);
                 }
             });

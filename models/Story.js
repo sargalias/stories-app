@@ -9,6 +9,7 @@ const storySchema = new mongoose.Schema({
     allowComments: {type: Boolean, default: true, required: true},
     authorId: {type: String, required: true},
     authorName: {type: String, required: true},
+    authorImage: {type: String, required: true},
     comments: [Comment.schema]
 });
 
