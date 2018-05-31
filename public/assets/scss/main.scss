@@ -29,6 +29,11 @@ header {
   ul {
     background-color: $color-navbar !important;
   }
+
+  #brand a {
+    color: black;
+  }
+
   .menu {
     align-items: center;
     &.left {
@@ -166,3 +171,4 @@ form > * {
     margin-top: 1rem;
   }
 }
+

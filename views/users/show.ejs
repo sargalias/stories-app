@@ -3,7 +3,7 @@
 <div class="grid-container">
     <h1>Stories</h1>
     <p>Public stories by <a href="/users/<%= user.id %>"><%= user.name %></a></p>
-    <div class="stories">
+    <div class="stories index">
         <% if (typeof stories !== 'undefined') { %>
         <%- include('../partials/stories-index'); %>
         <% } else { %>

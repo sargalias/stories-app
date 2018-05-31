@@ -14,6 +14,8 @@ header {
   background-color: #E5EBEE !important; }
   .top-bar ul {
     background-color: #E5EBEE !important; }
+  .top-bar #brand a {
+    color: black; }
   .top-bar .menu {
     align-items: center; }
     @media screen and (max-width: 639px) {
