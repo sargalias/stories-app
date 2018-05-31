@@ -141,4 +141,7 @@ form > * .button {
 .center {
   text-align: center; }
 
+a.story, a.callout {
+  display: block; }
+
 /*# sourceMappingURL=main.css.map */
