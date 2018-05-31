@@ -2,16 +2,12 @@
 <div class="story callout primary">
     <div class="top">
         <h3 class="title"><a href="/stories/<%= story.id %>"><%= story.title %></a></h3>
-        <!--<p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>-->
         <p>By <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
         <div class="body">
             <%- viewHelpers.trimBody(story.body); %>
         </div>
     </div>
     <div class="bottom">
-        <!--<div class="avatar-cont">-->
-        <!--<img class="avatar-img" src="<%= user.image%>" alt="">-->
-        <!--</div>-->
         <a href="/stories/<%= story.id %>" class="button primary">Read More</a>
     </div>
 </div>
