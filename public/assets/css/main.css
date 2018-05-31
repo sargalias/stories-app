@@ -41,10 +41,12 @@ header {
 
 footer {
   padding: 2rem 0;
-  background-color: #E5EBEE;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly; }
+  background-color: #E5EBEE; }
+  footer .grid-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center; }
   footer p {
     margin-bottom: 0; }
 
@@ -125,13 +127,15 @@ form > * .button {
     .mt {
       margin-top: 3rem; } }
 
-.story-show {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-gap: 3rem;
-  align-items: start; }
+@media screen and (min-width: 1000px) {
+  .story-show {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 3rem;
+    align-items: start; } }
 
 .author img {
+  max-width: 200px;
   border-radius: 50%; }
 
 .center {

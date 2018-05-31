@@ -13,7 +13,8 @@
               <%- include('../partials/story-content') %>
           </div>
       <div class="callout secondary author center">
-          <p><img src="<%= story.authorImage %>" alt=""></p>
+          <h3>Author</h3>
+          <p><img src="<%= story.authorImage %>" alt="" class="author-img"></p>
           <a href="/users/<%= story.authorId %>" class="button primary">See more from <%= story.authorName %></a>
       </div>
   </div>
