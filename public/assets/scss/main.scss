@@ -137,7 +137,10 @@ footer {
 
 .callout.primary {
   background-color: $color-primary !important;
-  &.story {
+}
+
+.stories {
+  .callout.primary.story {
     .body {
       background-color: darken($color-primary, 5) !important;
     }
@@ -190,3 +193,16 @@ form > * {
   }
 }
 
+.story-show {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 3rem;
+}
+
+.author {
+
+}
+
+.center {
+  text-align: center;
+}

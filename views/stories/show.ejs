@@ -1,7 +1,7 @@
 <%- include('../partials/header'); %>
 
 <div class="grid-container">
-  <div class="stories">
+  <div class="story-show">
     <% if (typeof story !== 'undefined') { %>
       <% if (story.privacy === 'PRIVATE') { %>
           <div class="story callout alert">
@@ -12,6 +12,12 @@
       <% } %>
               <%- include('../partials/story-content') %>
           </div>
+      <div class="callout secondary author center">
+          <img src="" alt="">
+          <p><%= story.authorName %></p>
+          <a href="/users/<%= story.authorId %>" class="button primary">See more from <%= story.authorName %></a>
+      </div>
+  </div>
 
           <!--Comments-->
           <% if (story.allowComments) { %>

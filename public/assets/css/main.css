@@ -92,12 +92,13 @@ footer {
 
 .callout.primary {
   background-color: #E9F4F9 !important; }
-  .callout.primary.story .body {
-    background-color: #d5eaf4 !important; }
-  .callout.primary.story:hover {
-    background-color: #d5eaf4 !important; }
-    .callout.primary.story:hover .body {
-      background-color: #c1e0ee !important; }
+
+.stories .callout.primary.story .body {
+  background-color: #d5eaf4 !important; }
+.stories .callout.primary.story:hover {
+  background-color: #d5eaf4 !important; }
+  .stories .callout.primary.story:hover .body {
+    background-color: #c1e0ee !important; }
 
 .body {
   background-color: rgba(0, 0, 0, 0.05);
@@ -123,5 +124,13 @@ form > * .button {
   @media screen and (min-width: 1000px) {
     .mt {
       margin-top: 3rem; } }
+
+.story-show {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 3rem; }
+
+.center {
+  text-align: center; }
 
 /*# sourceMappingURL=main.css.map */
