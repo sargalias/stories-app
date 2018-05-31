@@ -10,83 +10,21 @@
       <% } else { %>
           <div class="story callout primary">
       <% } %>
-              <h1 class="title"><%= story.title %></h1>
-              <p class="metadata">Published on <%= viewHelpers.formatDate(story.published); %> by <a href="/users/<%= story.authorId %>"><%= story.authorName %></a></p>
-              <div class="body">
-                  <%- story.body %>
-              </div>
-                <% if (user && user.id === story.authorId) { %>
-                    <div class="button-container">
-                        <a href="/stories/<%= story.id %>/edit" class="button warning">Edit</a>
-                        <form action="/stories/<%= story.id %>?_method=DELETE" method="POST" data-story-delete>
-                            <button class="button alert">Delete</button>
-                        </form>
-                    </div>
-                <% } %>
-
+              <%- include('../partials/story-content') %>
           </div>
 
-              <!--Comments-->
-              <% if (story.allowComments) { %>
+          <!--Comments-->
+          <% if (story.allowComments) { %>
 
-                  <!--REPLY-->
-                  <div class="reply">
-                      <% if (user) { %>
-                          <div class="">
-                              <h3>Leave a comment</h3>
-                              <form action="/stories/<%= story.id %>" method="POST">
-                                  <textarea name="commentText" id="commentText"></textarea>
-                                  <button type="submit" class="button primary">Submit</button>
-                              </form>
-                          </div>
-                      <% } else { %>
-                          <div>
-                              <p>You must <a href="/auth/google">sign in with google</a> to reply.</p>
-                          </div>
-                      <% } %>
-                  </div>
+              <!--Comment form-->
+              <%- include('../partials/comment-form') %>
 
                   <!--COMMENTS LISTING-->
-                  <div class="comments">
-                      <h3>Comments</h3>
-                      <% for (let i=story.comments.length-1; i>=0; i--) { %>
-                        <% let comment = story.comments[i]; %>
-                        <div class="comment callout secondary">
-                            <div class="avatar">
-                                <img src="<%= comment.author.image %>" alt="">
-                            </div>
-                            <div class="metadata">
-                                Posted on <%= viewHelpers.formatDate(comment.date); %> by <%= comment.author.name %>
-                            </div>
-                            <div class="content">
-                                <div data-comment-id="<%= comment.id %>">
-                                    <%- comment.body %>
-                                </div>
-                                <% if (user && user.id === comment.author.id ||
-                                        user && viewHelpers.userOwnsStory(user, story.id)) { %>
-                                    <div class="button-container" data-comment-button-cont="<%= comment.id %>">
-                                        <% if (user.id === comment.author.id) { %>
-                                        <button class="button warning" data-comment-edit-btn="<%= comment.id %>">Edit</button>
-                                        <% } %>
-                                        <form action="/stories/<%= story.id %>/comments/<%= comment.id %>?_method=DELETE" method="POST" data-comment-delete>
-                                            <button type="submit" class="button alert">Delete</button>
-                                        </form>
-                                    </div>
-                                    <noscript>Please enable JavaScript to edit and delete your comments</noscript>
-                                    <div class="edit-container display-none" data-comment-edit-form-cont="<%= comment.id %>">
-                                        <form action="/stories/<%= story.id %>/comments/<%= comment.id %>?_method=PUT" method="POST">
-                                            <textarea name="commentText" data-comment-input="<%= comment.id %>"><%- comment.body %></textarea>
-                                            <button type="submit" class="button warning" data-comment-submit-btn="<%= comment.id %>">Submit</button>
-                                            <button type="button" class="button secondary" data-comment-cancel-btn="<%= comment.id %>">Cancel</button>
-                                        </form>
-                                    </div>
-                                <% } %>
-                            </div>
-                        </div>
-                      <% } %>
+              <%- include('../partials/comments') %>
 
-                  </div>
-              <% } %>
+         <% } else { %>
+              <h3>Comments are disabled for this story idea.</h3>
+          <% } %>
       <% } else { %>
         <h1 class="title">Story Not Found</h1>
     <% } %>

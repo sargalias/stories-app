@@ -7,7 +7,7 @@
     <% } %>
 </div>
 <div>
-    <label for="privacy">Status:</label>
+    <label for="privacy">Privacy:</label>
     <select name="privacy" id="privacy" required>
         <% if (typeof story !== 'undefined' && story.privacy) { %>
         <option value="PUBLIC" <%= story.privacy === 'PUBLIC' ? 'selected' : ''%>>Public</option>

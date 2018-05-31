@@ -18,7 +18,7 @@
                     <div class="story callout primary">
                 <% } %>
                         <h3 class="title"><a href="/stories/<%= story.id %>"><%= story.title %></a></h3>
-                        <p><strong>Privacy status:</strong> <%= story.privacy.toLowerCase() %></p>
+                        <p><strong>Privacy:</strong> <%= story.privacy.toLowerCase() %></p>
                         <p><strong>Allow comments:</strong> <%= story.allowComments ? 'Yes' : 'No' %></p>
                         <p class="metadata"><strong>Published on:</strong> <%= viewHelpers.formatDate(story.published); %></p>
                         <p><strong>Body:</strong></p>

@@ -13,7 +13,7 @@ module.exports.storyValidation = checkSchema({
     },
     privacy: {
         in: ['body'],
-        errorMessage: 'Invalid choice for status',
+        errorMessage: 'Invalid choice for privacy',
         exists: true,
         custom: {
             errorMessage: 'Invalid value for Allow Comments',

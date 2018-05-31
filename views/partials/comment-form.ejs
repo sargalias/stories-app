@@ -1,0 +1,16 @@
+<!--REPLY-->
+<div class="reply">
+    <% if (user) { %>
+    <div class="">
+        <h3>Leave a comment</h3>
+        <form action="/stories/<%= story.id %>" method="POST">
+            <textarea name="commentText" id="commentText"></textarea>
+            <button type="submit" class="button primary">Submit</button>
+        </form>
+    </div>
+    <% } else { %>
+    <div>
+        <p>You must <a href="/auth/google">sign in with google</a> to reply.</p>
+    </div>
+    <% } %>
+</div>
