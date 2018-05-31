@@ -23,7 +23,7 @@
                         <p class="metadata"><strong>Published on:</strong> <%= viewHelpers.formatDate(story.published); %></p>
                         <p><strong>Body:</strong></p>
                         <div class="body">
-                            <%- story.body %>
+                            <%- viewHelpers.trimBody(story.body); %>
                         </div>
                         <div class="button-container">
                             <a href="/stories/<%= story.id %>" class="button primary">View Story</a>
