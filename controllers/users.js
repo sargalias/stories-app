@@ -6,7 +6,7 @@ module.exports.show = (req, res, next) => {
         let storiesToShow = user.stories.filter((story) => {
             return story.privacy === 'PUBLIC';
         });
-        res.render('users/show', {stories: storiesToShow});
+        res.render('users/show', {stories: storiesToShow, passedUser: user});
     });
 };
 
