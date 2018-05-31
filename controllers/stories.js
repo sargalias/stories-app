@@ -158,6 +158,6 @@ module.exports.delete = (req, res, next) => {
             return next(err);
         }
         req.flash('success', 'Story deleted');
-        return res.redirect('/stories');
+        return res.redirect('/user/dashboard');
     });
 };
