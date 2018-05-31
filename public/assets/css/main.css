@@ -7,8 +7,7 @@ body {
   grid-template-rows: 1fr auto; }
 
 header {
-  background-color: #E5EBEE;
-  margin-bottom: 3rem; }
+  background-color: #E5EBEE; }
 
 .top-bar {
   background-color: #E5EBEE !important; }
@@ -45,8 +44,7 @@ footer {
   background-color: #E5EBEE;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  margin-top: 3rem; }
+  justify-content: space-evenly; }
   footer p {
     margin-bottom: 0; }
 
@@ -110,5 +108,20 @@ footer {
 
 form > * .button {
   margin-top: 1rem; }
+
+.comment .avatar img {
+  border-radius: 50%; }
+
+.mb {
+  margin-bottom: 1rem; }
+  @media screen and (min-width: 1000px) {
+    .mb {
+      margin-bottom: 3rem; } }
+
+.mt {
+  margin-top: 1rem; }
+  @media screen and (min-width: 1000px) {
+    .mt {
+      margin-top: 3rem; } }
 
 /*# sourceMappingURL=main.css.map */
