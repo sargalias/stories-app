@@ -2,24 +2,28 @@
 
 <div class="grid-container welcome">
     <div class="callout primary">
-    <h1>Welcome</h1>
-    <p>On this site you can write down stories.</p>
-    <p>Story privacy:</p>
-        <ul>
-            <li>Public stories can be seen by anyone</li>
-            <li>Private stories can only be seen by the author</li>
-            <li>unlisted stories can only be seen by those who have the link</li>
-        </ul>
-    <p>Anyone can comment, unless you disable comments for your stories.</p>
-    <div class="button-container">
-      <a href="/stories" class="button primary">Stories</a>
-        <% if (user !== null) { %>
-            <a href="/users/dashboard" class="button primary">Dashboard</a>
-        <% } else { %>
-            <%- include('./partials/google-login-button'); %>
-        <% } %>
+        <h1>Welcome</h1>
+        <p>On this site you can write stories.</p>
+        <p>Stories can be edited and deleted by the author.</p>
+        <p>Stories have different privacy settings:</p>
+            <ul>
+                <li>Public stories can be seen by anyone.</li>
+                <li>Private stories can only be seen by the author.</li>
+                <li>unlisted stories can only be seen by those who have the link.</li>
+            </ul>
+        <p>Stories can also have comments disabled.</p>
+        <p>You must log in to create a story or write a comment.</p>
+        <p>Comments can be edited and deleted by their author.</p>
+        <p>Comments on a story can be deleted by the story author.</p>
+        <div class="button-container">
+          <a href="/stories" class="button primary">Stories</a>
+            <% if (user !== null) { %>
+                <a href="/users/dashboard" class="button primary">Dashboard</a>
+            <% } else { %>
+                <%- include('./partials/google-login-button'); %>
+            <% } %>
+        </div>
     </div>
-  </div>
 </div>
 
 <%- include('./partials/footer'); %>
